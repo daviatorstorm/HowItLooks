@@ -32,11 +32,12 @@ jobs:
 
     # Publish APK
     - name: Publish APK
-      run: dotnet publish -f:net9.0-android -c Release
+      working-directory: HowItLooks
+      run: dotnet publish -f:net9.0-android -c Release -o ./output
 
     # Upload APK as an artifact
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: android-apk
-        path: ./HowItLooks/bin/Release/net9.0-android/HowItLooks.apk
+        path: ./HowItLooks/output/HowItLooks.apk
