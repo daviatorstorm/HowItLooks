@@ -23,11 +23,15 @@ jobs:
         dotnet-version: '9.0.x'
 
     # Restore workloads
-    - name: Build APK
+    - name: Restore workloads
       run: dotnet workload restore
 
+    # Install workload
+    - name: Install workload
+      run: dotnet workload install maui
+
     # Publish APK
-    - name: Build APK
+    - name: Publish APK
       run: dotnet publish -f:net9.0-android -c Release -o ./output
 
     # Upload APK as an artifact
