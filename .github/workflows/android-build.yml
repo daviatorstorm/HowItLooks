@@ -22,6 +22,10 @@ jobs:
       with:
         dotnet-version: '9.0.x'
 
+    # Restore workloads
+    - name: Build APK
+      run: dotnet workload restore
+
     # Publish APK
     - name: Build APK
       run: dotnet publish -f:net9.0-android -c Release -o ./output
