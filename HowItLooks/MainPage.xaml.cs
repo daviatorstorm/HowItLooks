@@ -74,6 +74,32 @@ namespace HowItLooks
                 Enemies.Remove(enemy);
         }
 
+        private async void InitiativeLabel_Clicked(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            var enemy = label?.BindingContext as Enemy;
+            if (enemy == null) return;
+
+            string result = await DisplayPromptAsync("Зміна ініціативи", "Вкажіть нове число ініціативи:", keyboard: Keyboard.Numeric, initialValue: enemy.Initiative.ToString());
+            if (int.TryParse(result, out int newInitiative))
+            {
+                enemy.Initiative = newInitiative;
+                SortEnemies();
+            }
+        }
+        private void SortEnemies()
+        {
+            var sorted = Enemies.OrderByDescending(e => e.Initiative).ToList();
+
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                if (Enemies[i] != sorted[i])
+                {
+                    Enemies.Move(Enemies.IndexOf(sorted[i]), i);
+                }
+            }
+        }
+
         //private void OnCounterClicked(object sender, EventArgs e)
         //{
         //    count++;
