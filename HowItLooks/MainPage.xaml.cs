@@ -87,6 +87,7 @@ namespace HowItLooks
                 SortEnemies();
             }
         }
+
         private void SortEnemies()
         {
             var sorted = Enemies.OrderByDescending(e => e.Initiative).ToList();
