@@ -8,6 +8,7 @@ public class Enemy : INotifyPropertyChanged
     private string _name;
     private int _hp;
     private int _hpLeft;
+    private int _initiative;
 
     public string Name { get => _name; set
         {
@@ -36,13 +37,27 @@ public class Enemy : INotifyPropertyChanged
             }
         }
     }
+    public int Initiative
+    {
+        get => _initiative;
+        set
+        {
+            if (_initiative != value)
+            {
+                _initiative = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public string HitPointsLabel { get => $"{HitPointsLeft} / {HitPoints} HP"; }
 
-    public Enemy(string name, int hitPoints)
+    public Enemy(string name, int hitPoints, int initiative = 0)
     {
         _name = string.Empty;
         Name = name;
         HitPoints = HitPointsLeft = hitPoints;
+        Initiative = initiative;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
