@@ -9,6 +9,7 @@ public class Enemy : INotifyPropertyChanged
     private int _hp;
     private int _hpLeft;
     private int _initiative;
+    private bool _isActive;
 
     public string Name { get => _name; set
         {
@@ -45,6 +46,19 @@ public class Enemy : INotifyPropertyChanged
             if (_initiative != value)
             {
                 _initiative = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool IsActive
+    {
+        get => _isActive;
+        set
+        {
+            if (_isActive != value)
+            {
+                _isActive = value;
                 OnPropertyChanged();
             }
         }
