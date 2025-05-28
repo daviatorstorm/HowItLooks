@@ -27,8 +27,6 @@ namespace HowItLooks
             //Navigation.PushModalAsync(new AddEnemyModal());
             var newMonsterName = await DisplayPromptAsync("Додати монстра", "Назвіть монстра:", "Зберегти", "Відмінити");
 
-            //Enemies.Add(new Enemy(newMonsterName, 0));
-
             if (string.IsNullOrWhiteSpace(newMonsterName)) return;
 
             var newEnemy = new Enemy(newMonsterName, 0);
@@ -153,15 +151,5 @@ namespace HowItLooks
             SetActiveEnemy(sorted[nextIndex]);
         }
 
-        public class ActiveToColorConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                return (bool)value ? Colors.MediumPurple : Colors.Transparent;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-                => throw new NotImplementedException();
-        }
     }
 }

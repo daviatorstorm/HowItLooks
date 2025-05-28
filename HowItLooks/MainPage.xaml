@@ -27,7 +27,6 @@
                             </DataTrigger>
                         </Border.Triggers>
 
-
                         <Grid>  
                             <Grid.RowDefinitions>
                                 <RowDefinition />
