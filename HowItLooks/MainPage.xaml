@@ -2,16 +2,32 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HowItLooks.MainPage">
-
-    <ScrollView>
+    
+ <Grid RowDefinitions="*,Auto">
+    <ScrollView Grid.Row="0">
         <VerticalStackLayout
-            Padding="30,0"
+            Padding="10,0"
             Spacing="25">
 
             <CollectionView ItemsSource="{Binding Enemies}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                      <Border Padding="3">
+                        <Border.Stroke>
+                            <SolidColorBrush Color="Transparent" />
+                        </Border.Stroke>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                <Setter Property="Stroke" Value="MediumPurple" />
+                                <Setter Property="StrokeThickness" Value="3" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                <Setter Property="Stroke" Value="Transparent" />
+                                <Setter Property="StrokeThickness" Value="0" />
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Grid>  
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
@@ -26,7 +42,7 @@
                             <Label 
                                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
                                 Text="{Binding Name}" FontSize="18" TextColor="Black" Margin="5"
-                                HorizontalTextAlignment="Center"
+
                                 BindingContext="{Binding}">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
@@ -77,6 +93,7 @@
                                 Style="{StaticResource EnemyBtn}" />
 
                         </Grid>
+                      </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -84,8 +101,33 @@
             <Button 
                 x:Name="AddListItem"
                 Text="Додати" 
-                Clicked="AddEnemyClicked"/>
+                Clicked="AddEnemyClicked"
+                Margin="0,0,0,10"/>
         </VerticalStackLayout>
     </ScrollView>
-    
+    <Grid Grid.Row="1"
+          BackgroundColor="#000000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0"
+                    Text="← Попередній"
+                    Clicked="PreviousEnemy_Clicked"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    Margin="2,3" />
+        <Button Grid.Column="1"
+                    Text="Наступний →"
+                    Clicked="NextEnemy_Clicked"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    Margin="2,3" />
+    </Grid>
+ </Grid>
 </ContentPage>

@@ -1,11 +1,13 @@
 ﻿using HowItLooks.Models;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace HowItLooks
 {
     public partial class MainPage : ContentPage
     {
         public ObservableCollection<Enemy> Enemies { get; set; }
+        private Enemy? _activeEnemy;
 
         public MainPage()
         {
@@ -15,6 +17,7 @@ namespace HowItLooks
             {
                 new Enemy("Монстер 1",  10)
             };
+            SetActiveEnemy(Enemies[0]);
 
             BindingContext = this;
         }
@@ -24,7 +27,13 @@ namespace HowItLooks
             //Navigation.PushModalAsync(new AddEnemyModal());
             var newMonsterName = await DisplayPromptAsync("Додати монстра", "Назвіть монстра:", "Зберегти", "Відмінити");
 
-            Enemies.Add(new Enemy(newMonsterName, 0));
+            if (string.IsNullOrWhiteSpace(newMonsterName)) return;
+
+            var newEnemy = new Enemy(newMonsterName, 0);
+            Enemies.Add(newEnemy);
+
+            if (Enemies.Count == 1)
+                SetActiveEnemy(newEnemy);
         }
 
         private async void IncreaseHP_Clicked(object sender, EventArgs e)
@@ -71,7 +80,18 @@ namespace HowItLooks
             var enemy = button?.BindingContext as Enemy;
             var result = await DisplayAlert("Видалення", "Ви дійсно бажаєте видалити монстра?", "Видалити", "Відмінити");
             if (result && enemy != null)
+            {
+                int index = Enemies.IndexOf(enemy);
                 Enemies.Remove(enemy);
+
+                if (Enemies.Count == 0)
+                    SetActiveEnemy(null);
+                else if (_activeEnemy == enemy)
+                {
+                    int nextIndex = Math.Min(index, Enemies.Count - 1);
+                    SetActiveEnemy(Enemies[nextIndex]);
+                }
+            }
         }
 
         private async void InitiativeLabel_Clicked(object sender, EventArgs e)
@@ -101,14 +121,35 @@ namespace HowItLooks
             }
         }
 
-        //private void OnCounterClicked(object sender, EventArgs e)
-        //{
-        //    count++;
+        private void SetActiveEnemy(Enemy? enemy)
+        {
+            foreach (var e in Enemies)
+                e.IsActive = false;
 
-        //    if (count == 1)
-        //        CounterBtn.Text = $"Clicked {count} time";
-        //    else
-        //        CounterBtn.Text = $"Clicked {count} times";
-        //}
+            _activeEnemy = enemy;
+            if (enemy != null)
+                enemy.IsActive = true;
+        }
+
+        private void PreviousEnemy_Clicked(object sender, EventArgs e)
+        {
+            if (_activeEnemy == null || Enemies.Count == 0) return;
+
+            var sorted = Enemies.OrderByDescending(en => en.Initiative).ToList();
+            int index = sorted.IndexOf(_activeEnemy);
+            int previousIndex = (index - 1 + sorted.Count) % sorted.Count;
+            SetActiveEnemy(sorted[previousIndex]);
+        }
+
+        private void NextEnemy_Clicked(object sender, EventArgs e)
+        {
+            if (_activeEnemy == null || Enemies.Count == 0) return;
+
+            var sorted = Enemies.OrderByDescending(en => en.Initiative).ToList();
+            int index = sorted.IndexOf(_activeEnemy);
+           int nextIndex = (index + 1) % sorted.Count;
+            SetActiveEnemy(sorted[nextIndex]);
+        }
+
     }
 }
