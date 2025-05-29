@@ -1,6 +1,5 @@
 ﻿using HowItLooks.Models;
 using System.Collections.ObjectModel;
-using System.Globalization;
 
 namespace HowItLooks
 {
@@ -71,7 +70,8 @@ namespace HowItLooks
             var enemy = button?.BindingContext as Enemy;
             if (enemy == null) return;
             string result = await DisplayPromptAsync("Змінити НР", "На скільки змінити НР?", initialValue: enemy.Name);
-            enemy.Name = result;
+            if (result != null)
+                enemy.Name = result;
         }
 
         private async void RemoveEnemy_Clicked(object sender, EventArgs e)
@@ -100,7 +100,7 @@ namespace HowItLooks
             var enemy = label?.BindingContext as Enemy;
             if (enemy == null) return;
 
-            string result = await DisplayPromptAsync("Зміна ініціативи", "Вкажіть нове число ініціативи:", keyboard: Keyboard.Numeric, initialValue: enemy.Initiative.ToString());
+            string result = await DisplayPromptAsync("Зміна ініціативи", "Вкажіть нове число ініціативи:", keyboard: Keyboard.Numeric);
             if (int.TryParse(result, out int newInitiative))
             {
                 enemy.Initiative = newInitiative;
