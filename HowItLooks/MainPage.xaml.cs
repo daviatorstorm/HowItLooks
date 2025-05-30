@@ -1,4 +1,6 @@
-﻿using HowItLooks.Models;
+﻿using HowItLooks.Entities;
+using HowItLooks.Models;
+using HowItLooks.Services;
 using System.Collections.ObjectModel;
 
 namespace HowItLooks
@@ -7,16 +9,18 @@ namespace HowItLooks
     {
         public ObservableCollection<Enemy> Enemies { get; set; }
         private Enemy? _activeEnemy;
+        private readonly DatabaseService _db;
 
         public MainPage()
         {
             InitializeComponent();
+            _db = new DatabaseService();
+            DeviceDisplay.KeepScreenOn = true;
+            var monsters = _db.GetAllMonsters().Select(x => new Enemy(x));
+            Enemies = new ObservableCollection<Enemy>(monsters);
+            SortEnemies();
+            _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive);
             //BindingContext = new EnemiesViewModel();
-            Enemies = new ObservableCollection<Enemy>
-            {
-                new Enemy("Монстер 1",  10)
-            };
-            SetActiveEnemy(Enemies[0]);
 
             BindingContext = this;
         }
@@ -28,7 +32,8 @@ namespace HowItLooks
 
             if (string.IsNullOrWhiteSpace(newMonsterName)) return;
 
-            var newEnemy = new Enemy(newMonsterName, 0);
+            var entity = _db.AddMonster(newMonsterName);
+            var newEnemy = new Enemy(entity);
             Enemies.Add(newEnemy);
 
             if (Enemies.Count == 1)
@@ -42,7 +47,11 @@ namespace HowItLooks
             if (!int.TryParse(result, out int hp)) return;
 
             var enemy = button?.BindingContext as Enemy;
-            enemy?.IncreaseHitPoints(hp);
+            if (enemy != null)
+            {
+                enemy.IncreaseHitPoints(hp);
+                _db.UpdateMonster(new EnemyEntity(enemy));
+            }
         }
 
         private async void DecreaseHP_Clicked(object sender, EventArgs e)
@@ -52,7 +61,11 @@ namespace HowItLooks
             if (!int.TryParse(result, out int hp)) return;
 
             var enemy = button?.BindingContext as Enemy;
-            enemy?.DecreaseHitPoints(hp);
+            if (enemy != null)
+            {
+                enemy?.DecreaseHitPoints(hp);
+                _db.UpdateMonster(new EnemyEntity(enemy));
+            }
         }
 
         private async void HPLabel_Clicked(object sender, EventArgs e)
@@ -61,7 +74,11 @@ namespace HowItLooks
             var enemy = button?.BindingContext as Enemy;
             string result = await DisplayPromptAsync("Змінити НР", "На скільки змінити НР?", keyboard: Keyboard.Numeric);
             if (!int.TryParse(result, out int hp)) return;
-            if (enemy != null) enemy.UpdateHitPoints(hp);
+            if (enemy != null)
+            {
+                enemy.UpdateHitPoints(hp);
+                _db.UpdateMonster(new EnemyEntity(enemy));
+            }
         }
 
         private async void NameLabel_Clicked(object sender, TappedEventArgs e)
@@ -71,7 +88,10 @@ namespace HowItLooks
             if (enemy == null) return;
             string result = await DisplayPromptAsync("Змінити НР", "На скільки змінити НР?", initialValue: enemy.Name);
             if (result != null)
+            { 
                 enemy.Name = result;
+                _db.UpdateMonster(new EnemyEntity(enemy));
+            }
         }
 
         private async void RemoveEnemy_Clicked(object sender, EventArgs e)
@@ -83,13 +103,16 @@ namespace HowItLooks
             {
                 int index = Enemies.IndexOf(enemy);
                 Enemies.Remove(enemy);
+                _db.DeleteMonster(new EnemyEntity(enemy));
 
                 if (Enemies.Count == 0)
                     SetActiveEnemy(null);
                 else if (_activeEnemy == enemy)
                 {
                     int nextIndex = Math.Min(index, Enemies.Count - 1);
-                    SetActiveEnemy(Enemies[nextIndex]);
+                    Enemy localEnemy = Enemies[nextIndex];
+                    SetActiveEnemy(localEnemy);
+                    _db.UpdateMonster(new EnemyEntity(enemy));
                 }
             }
         }
@@ -104,6 +127,7 @@ namespace HowItLooks
             if (int.TryParse(result, out int newInitiative))
             {
                 enemy.Initiative = newInitiative;
+                _db.UpdateMonster(new EnemyEntity(enemy));
                 SortEnemies();
             }
         }
@@ -126,9 +150,16 @@ namespace HowItLooks
             foreach (var e in Enemies)
                 e.IsActive = false;
 
+            if (_activeEnemy != null)
+                _db.UpdateMonster(new EnemyEntity(_activeEnemy));
+
             _activeEnemy = enemy;
             if (enemy != null)
                 enemy.IsActive = true;
+
+            if (_activeEnemy != null)
+                _db.UpdateMonster(new EnemyEntity(_activeEnemy));
+
         }
 
         private void PreviousEnemy_Clicked(object sender, EventArgs e)
@@ -147,9 +178,8 @@ namespace HowItLooks
 
             var sorted = Enemies.OrderByDescending(en => en.Initiative).ToList();
             int index = sorted.IndexOf(_activeEnemy);
-           int nextIndex = (index + 1) % sorted.Count;
+            int nextIndex = (index + 1) % sorted.Count;
             SetActiveEnemy(sorted[nextIndex]);
         }
-
     }
 }

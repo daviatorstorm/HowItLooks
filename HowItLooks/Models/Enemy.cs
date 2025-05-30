@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using HowItLooks.Entities;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace HowItLooks.Models;
@@ -11,6 +12,7 @@ public class Enemy : INotifyPropertyChanged
     private int _initiative;
     private bool _isActive;
 
+    public int Id { get; set; }
     public string Name { get => _name; set
         {
             if (_name != value)
@@ -72,6 +74,16 @@ public class Enemy : INotifyPropertyChanged
         Name = name;
         HitPoints = HitPointsLeft = hitPoints;
         Initiative = initiative;
+    }
+
+    public Enemy(EnemyEntity entity)
+    {
+        Id = entity.Id;
+        Name = entity.Name;
+        HitPoints = entity.HitPoints;
+        Initiative = entity.Initiative;
+        HitPointsLeft = entity.HitPointsLeft;
+        IsActive = entity.IsActive;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
