@@ -61,7 +61,8 @@
                             <Button 
                                 Grid.Row="1" Grid.Column="1"
                                 x:Name="IncreaseHP"
-                                Text="↑" Clicked="IncreaseHP_Clicked" BindingContext="{Binding}"
+                                ImageSource="keyboard_double_arrow_up.png"
+                                Clicked="IncreaseHP_Clicked" BindingContext="{Binding}"
                                 BackgroundColor="Green"
                                 HorizontalOptions="Start"
                                 Style="{StaticResource EnemyBtn}" />
@@ -78,7 +79,8 @@
                             <Button 
                                 Grid.Row="1" Grid.Column="3"
                                 x:Name="DecreaseHP"
-                                Text="↓" Clicked="DecreaseHP_Clicked" BindingContext="{Binding}"
+                                ImageSource="keyboard_double_arrow_down.png"
+                                Clicked="DecreaseHP_Clicked" BindingContext="{Binding}"
                                 HorizontalOptions="End"
                                 BackgroundColor="Red"
                                 Style="{StaticResource EnemyBtn}" />
@@ -86,7 +88,8 @@
                             <Button 
                                 Grid.Row="1" Grid.Column="4"
                                 x:Name="RemoveEnemy"
-                                Text="Rem" BindingContext="{Binding}"
+                                ImageSource="delete.png"
+                                BindingContext="{Binding}"
                                 HorizontalOptions="End"
                                 BackgroundColor="Red"
                                 Clicked="RemoveEnemy_Clicked"
@@ -113,21 +116,29 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0"
-                    Text="← Попередній"
+                    Text="Попередній"
                     Clicked="PreviousEnemy_Clicked"
                     BackgroundColor="#512BD4"
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="10"
                     Margin="2,3" />
+        <Image Grid.Column="0"
+            Source="arrow_back_ios.png"
+            Margin="20,0"
+            HorizontalOptions="Start" />
         <Button Grid.Column="1"
-                    Text="Наступний →"
+                    Text="Наступний"
                     Clicked="NextEnemy_Clicked"
                     BackgroundColor="#512BD4"
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="10"
                     Margin="2,3" />
+        <Image Grid.Column="1"
+            Source="arrow_forward_ios.png"
+            Margin="20,0"
+            HorizontalOptions="End" />
     </Grid>
  </Grid>
 </ContentPage>
