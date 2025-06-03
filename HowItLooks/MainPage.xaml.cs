@@ -11,6 +11,18 @@ namespace HowItLooks
         private Enemy? _activeEnemy;
         private readonly DatabaseService _db;
 
+        private bool _isRoundStarted = false;
+        private int _roundCounter = 1;
+
+        public int RoundCounter
+        {
+            get => _roundCounter;
+            set
+            {
+                _roundCounter = value;
+                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+            }
+        }
         public MainPage()
         {
             InitializeComponent();
@@ -169,6 +181,15 @@ namespace HowItLooks
             var sorted = Enemies.OrderByDescending(en => en.Initiative).ToList();
             int index = sorted.IndexOf(_activeEnemy);
             int previousIndex = (index - 1 + sorted.Count) % sorted.Count;
+
+            if (_isRoundStarted && index == 0 && previousIndex == sorted.Count - 1)
+            {
+                if (_roundCounter > 1)
+                {
+                    _roundCounter--;
+                    RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                }
+            }
             SetActiveEnemy(sorted[previousIndex]);
         }
 
@@ -179,7 +200,42 @@ namespace HowItLooks
             var sorted = Enemies.OrderByDescending(en => en.Initiative).ToList();
             int index = sorted.IndexOf(_activeEnemy);
             int nextIndex = (index + 1) % sorted.Count;
+
+            if (_isRoundStarted && index == sorted.Count - 1 && nextIndex == 0)
+            {
+                _roundCounter++;
+                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+            }
             SetActiveEnemy(sorted[nextIndex]);
+        }
+
+        private void StartRound_Clicked(object sender, EventArgs e)
+        {
+            RoundCounter++;
+            if (Enemies.Count > 0)
+                SetActiveEnemy(Enemies.OrderByDescending(e => e.Initiative).First());
+        }
+
+        private void StartEndButton_Clicked(object sender, EventArgs e)
+        {
+            if (!_isRoundStarted)
+            {
+                _isRoundStarted = true;
+                _roundCounter = 1;
+                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                RoundCounterBorder.IsVisible = true;
+                StartEndButton.Text = "Кінець";
+
+                var sorted = Enemies.OrderByDescending(e => e.Initiative).ToList();
+                if (sorted.Count > 0)
+                    SetActiveEnemy(sorted[0]);
+            }
+            else
+            {
+                _isRoundStarted = false;
+                RoundCounterBorder.IsVisible = false;
+                StartEndButton.Text = "Початок";
+            }
         }
     }
 }
