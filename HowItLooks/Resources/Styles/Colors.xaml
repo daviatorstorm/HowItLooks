@@ -41,4 +41,11 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <Color x:Key="RoundCounterBackgroundLight">#EEE</Color>
+    <Color x:Key="RoundCounterBackgroundDark">#333</Color>
+    <Color x:Key="RoundCounterStrokeLight">#CCC</Color>
+    <Color x:Key="RoundCounterStrokeDark">#666</Color>
+    <Color x:Key="RoundCounterTextLight">#000</Color>
+    <Color x:Key="RoundCounterTextDark">#FFF</Color>
 </ResourceDictionary>

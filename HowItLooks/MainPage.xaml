@@ -1,166 +1,151 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HowItLooks.MainPage">
-    
- <Grid RowDefinitions="*,Auto">
-    <ScrollView Grid.Row="0">
-        <VerticalStackLayout
+             x:Class="HowItLooks.MainPage"
+             Title="Основна">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
             Padding="10,0"
             Spacing="25">
-            <Border x:Name="RoundCounterBorder"
-                BackgroundColor="#EEE"
-                Stroke="#CCC"
-                StrokeThickness="1"
-                Margin="0,10,0,0"
-                IsVisible="False">
-                <Label x:Name="RoundCounterLabel"
+                <Border x:Name="RoundCounterBorder"
+                    Style="{StaticResource RoundCounterBorderStyle}"
+                    IsVisible="False">
+                    <Label x:Name="RoundCounterLabel"
                        Text="Раунд: 1"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       Margin="0,2" />
-            </Border>
+                       Style="{StaticResource RoundCounterLabelStyle}" />
+                </Border>
 
-            <CollectionView ItemsSource="{Binding Enemies}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                      <Border Padding="3">
-                        <Border.Stroke>
-                            <SolidColorBrush Color="Transparent" />
-                        </Border.Stroke>
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
-                                <Setter Property="Stroke" Value="MediumPurple" />
-                                <Setter Property="StrokeThickness" Value="3" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
-                                <Setter Property="Stroke" Value="Transparent" />
-                                <Setter Property="StrokeThickness" Value="0" />
-                            </DataTrigger>
-                        </Border.Triggers>
+                <CollectionView ItemsSource="{Binding Enemies}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="3">
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="Transparent" />
+                                </Border.Stroke>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                        <Setter Property="Stroke" Value="MediumPurple" />
+                                        <Setter Property="StrokeThickness" Value="3" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                        <Setter Property="StrokeThickness" Value="0" />
+                                    </DataTrigger>
+                                </Border.Triggers>
 
-                        <Grid>  
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Label 
-                                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
-                                Text="{Binding Name}" FontSize="18" TextColor="Black" Margin="5"
-
-                                BindingContext="{Binding}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label 
-                                Grid.Row="1" Grid.Column="0"
-                                Text="{Binding Initiative}" FontSize="14" TextColor="Gray"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center"
-                                BindingContext="{Binding}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Button 
-                                Grid.Row="1" Grid.Column="1"
-                                x:Name="IncreaseHP"
-                                ImageSource="keyboard_double_arrow_up.png"
-                                Clicked="IncreaseHP_Clicked" BindingContext="{Binding}"
-                                BackgroundColor="Green"
-                                HorizontalOptions="Start"
-                                Style="{StaticResource EnemyBtn}" />
-                            <Label 
-                                Grid.Row="1" Grid.Column="2"
-                                Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="14" TextColor="Gray"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center"
-                                BindingContext="{Binding}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="HPLabel_Clicked"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Button 
-                                Grid.Row="1" Grid.Column="3"
-                                x:Name="DecreaseHP"
-                                ImageSource="keyboard_double_arrow_down.png"
-                                Clicked="DecreaseHP_Clicked" BindingContext="{Binding}"
-                                HorizontalOptions="End"
-                                BackgroundColor="Red"
-                                Style="{StaticResource EnemyBtn}" />
-
-                            <Button 
-                                Grid.Row="1" Grid.Column="4"
-                                x:Name="RemoveEnemy"
-                                ImageSource="delete.png"
-                                BindingContext="{Binding}"
-                                HorizontalOptions="End"
-                                BackgroundColor="Red"
-                                Clicked="RemoveEnemy_Clicked"
-                                Style="{StaticResource EnemyBtn}" />
-
-                        </Grid>
-                      </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Button 
-                x:Name="AddListItem"
-                Text="Додати" 
-                Clicked="AddEnemyClicked"
-                Margin="0,0,0,10"/>
-        </VerticalStackLayout>
-    </ScrollView>
-    <Grid Grid.Row="1"
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                                        Text="{Binding Name}" FontSize="18" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        Margin="5"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label 
+                                        Grid.Row="1" Grid.Column="0"
+                                        Text="{Binding Initiative}" FontSize="14" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Button 
+                                        Grid.Row="1" Grid.Column="1"
+                                        x:Name="IncreaseHP"
+                                        ImageSource="keyboard_double_arrow_up.png"
+                                        Clicked="IncreaseHP_Clicked" BindingContext="{Binding}"
+                                        BackgroundColor="Green"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource EnemyBtn}" />
+                                    <Label 
+                                        Grid.Row="1" Grid.Column="2"
+                                        Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="14" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="HPLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Button 
+                                        Grid.Row="1" Grid.Column="3"
+                                        x:Name="DecreaseHP"
+                                        ImageSource="keyboard_double_arrow_down.png"
+                                        Clicked="DecreaseHP_Clicked" BindingContext="{Binding}"
+                                        HorizontalOptions="End"
+                                        BackgroundColor="Red"
+                                        Style="{StaticResource EnemyBtn}" />
+                                    <Button 
+                                        Grid.Row="1" Grid.Column="4"
+                                        x:Name="RemoveEnemy"
+                                        ImageSource="delete.png"
+                                        BindingContext="{Binding}"
+                                        HorizontalOptions="End"
+                                        BackgroundColor="Red"
+                                        Clicked="RemoveEnemy_Clicked"
+                                        Style="{StaticResource EnemyBtn}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+                <Button 
+                    x:Name="AddListItem"
+                    Text="Додати" 
+                    Clicked="AddEnemyClicked"
+                    Margin="0,0,0,10"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="1"
           BackgroundColor="#000000">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0"
+            <Button Grid.Column="0"
                     Text="Попередній"
                     Clicked="PreviousEnemy_Clicked"
-                    BackgroundColor="#512BD4"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    Margin="2,3" />
-        <Image Grid.Column="0"
-            Source="arrow_back_ios.png"
-            Margin="20,0"
-            HorizontalOptions="Start" />
-        <Button Grid.Column="1"
+                    Style="{StaticResource NavButtonStyle}"/>
+            <Image Grid.Column="0"
+                    Source="arrow_back_ios.png"
+                    Margin="20,0"
+                    HorizontalOptions="Start" />
+            <Button Grid.Column="1"
                     x:Name="StartEndButton"
                     Text="Почати"
                     Clicked="StartEndButton_Clicked"
-                    BackgroundColor="#28A745"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    Margin="5,3" />
-        <Button Grid.Column="2"
-                    Text="Наступний →"
+                    Style="{StaticResource StartEndButtonStyle}"/>
+            <Button Grid.Column="2"
+                    Text="Наступний"
                     Clicked="NextEnemy_Clicked"
-                    BackgroundColor="#512BD4"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    Margin="2,3" />
-        <Image Grid.Column="1"
-            Source="arrow_forward_ios.png"
-            Margin="20,0"
-            HorizontalOptions="End" />
+                   Style="{StaticResource NavButtonStyle}"/>
+            <Image Grid.Column="2"
+                    Source="arrow_forward_ios.png"
+                    Margin="20,0"
+                    HorizontalOptions="End" />
+        </Grid>
     </Grid>
- </Grid>
 </ContentPage>
