@@ -5,6 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HowItLooks"
     Shell.FlyoutBehavior="Flyout"
+    xmlns:extension="clr-namespace:HowItLooks.Extension"
+    xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
     Title="DS Game Launch">
 
     <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
@@ -25,7 +27,7 @@
                 <Image x:Name="MainIcon"
                        Source="campaign.png"
                        Style="{StaticResource FlyoutMenuIconStyle}"/>
-                <Label Text="Основна"
+                <Label Text="{extension:Translate Key=Main}"
                        Grid.Column="1"
                        Style="{StaticResource FlyoutMenuLabelStyle}" />
             </Grid>
@@ -38,11 +40,10 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
                 <Image x:Name="GlobalsIcon"
                        Source="earth.png"
                        Style="{StaticResource FlyoutMenuIconStyle}"/>
-                <Label Text="Глобальні"
+                <Label Text="{extension:Translate Key=Global}"
                        Grid.Column="1"
                        Style="{StaticResource FlyoutMenuLabelStyle}" />
             </Grid>
@@ -56,6 +57,21 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Picker
+                x:Name="LanguagePicker"
+                Margin="0,0,170,0"
+                Grid.Column="0"
+                WidthRequest="90"
+                Title="Language"
+                SelectedIndexChanged="OnLanguagePickerChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Українська</x:String>
+                        <x:String>English</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                
+            </Picker>
             <ImageButton
                 x:Name="ThemeToggleButton"
                 Grid.Column="1"

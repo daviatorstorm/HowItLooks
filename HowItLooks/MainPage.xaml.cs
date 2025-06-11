@@ -2,6 +2,7 @@
 using HowItLooks.Models;
 using HowItLooks.Services;
 using System.Collections.ObjectModel;
+using HowItLooks.Extension;
 
 namespace HowItLooks
 {
@@ -19,10 +20,30 @@ namespace HowItLooks
             get => _roundCounter;
             set
             {
-                _roundCounter = value;
-                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                if (_roundCounter != value)
+                {
+                    _roundCounter = value;
+                    OnPropertyChanged(nameof(RoundCounter));
+                    OnPropertyChanged(nameof(RoundDisplayText));
+                }
             }
         }
+        public bool IsRoundStarted
+        {
+            get => _isRoundStarted;
+            set
+            {
+                if (_isRoundStarted != value)
+                {
+                    _isRoundStarted = value;
+                    OnPropertyChanged(nameof(IsRoundStarted));
+                    OnPropertyChanged(nameof(StartEndButtonText));
+                }
+            }
+        }
+        public string RoundDisplayText => string.Format(Translator.Instance["Round"], RoundCounter);
+        public string StartEndButtonText =>
+            IsRoundStarted ? Translator.Instance["End"] : Translator.Instance["Start"];
         public MainPage()
         {
             InitializeComponent();
@@ -35,12 +56,19 @@ namespace HowItLooks
             //BindingContext = new EnemiesViewModel();
 
             BindingContext = this;
+            Translator.Instance.PropertyChanged += (s, e) =>
+            {
+                OnPropertyChanged(nameof(StartEndButtonText));
+                OnPropertyChanged(nameof(RoundDisplayText));
+            };
         }
 
         private async void AddEnemyClicked(object sender, EventArgs e)
         {
-            //Navigation.PushModalAsync(new AddEnemyModal());
-            var newMonsterName = await DisplayPromptAsync("Додати монстра", "Назвіть монстра:", "Зберегти", "Відмінити");
+            var newMonsterName = await DisplayPromptAsync(Translator.Instance["AddAMonster"],
+                                                          Translator.Instance["NameTheMonster"],
+                                                          Translator.Instance["Save"],
+                                                          Translator.Instance["Cancel"]);
 
             if (string.IsNullOrWhiteSpace(newMonsterName)) return;
 
@@ -55,7 +83,9 @@ namespace HowItLooks
         private async void IncreaseHP_Clicked(object sender, EventArgs e)
         {
             var button = sender as Button;
-            string result = await DisplayPromptAsync("Збільшити НР", "На скільки збільшити НР?", keyboard: Keyboard.Numeric);
+            string result = await DisplayPromptAsync(Translator.Instance["IncreaseTheHP"],
+                                                     Translator.Instance["HowMuchToIncreaseTheHP"],
+                                                     keyboard: Keyboard.Numeric);
             if (!int.TryParse(result, out int hp)) return;
 
             var enemy = button?.BindingContext as Enemy;
@@ -69,7 +99,11 @@ namespace HowItLooks
         private async void DecreaseHP_Clicked(object sender, EventArgs e)
         {
             var button = sender as Button;
-            string result = await DisplayPromptAsync("Зменшити НР", "На скільки зменшити НР?", keyboard: Keyboard.Numeric);
+            string result = await DisplayPromptAsync(Translator.Instance["ReduceHP"],
+                                                     Translator.Instance["HowMuchToReduceTheHP"],
+                                                     "OK",
+                                                     Translator.Instance["Cancel"],
+                                                     keyboard: Keyboard.Numeric);
             if (!int.TryParse(result, out int hp)) return;
 
             var enemy = button?.BindingContext as Enemy;
@@ -84,7 +118,11 @@ namespace HowItLooks
         {
             var button = sender as Label;
             var enemy = button?.BindingContext as Enemy;
-            string result = await DisplayPromptAsync("Змінити НР", "На скільки змінити НР?", keyboard: Keyboard.Numeric);
+            string result = await DisplayPromptAsync(Translator.Instance["ChangeHP"],
+                                                     Translator.Instance["HowMuchToChangeHP"],
+                                                     "OK",
+                                                     Translator.Instance["Cancel"],
+                                                     keyboard: Keyboard.Numeric);
             if (!int.TryParse(result, out int hp)) return;
             if (enemy != null)
             {
@@ -98,7 +136,11 @@ namespace HowItLooks
             var button = sender as Label;
             var enemy = button?.BindingContext as Enemy;
             if (enemy == null) return;
-            string result = await DisplayPromptAsync("Змінити НР", "На скільки змінити НР?", initialValue: enemy.Name);
+            string result = await DisplayPromptAsync(Translator.Instance["ChangeName"],
+                                                     Translator.Instance["WhatNameWillYouChange"],
+                                                     "OK",
+                                                     Translator.Instance["Cancel"],
+                                                     initialValue: enemy.Name);
             if (result != null)
             { 
                 enemy.Name = result;
@@ -110,7 +152,10 @@ namespace HowItLooks
         {
             var button = sender as Button;
             var enemy = button?.BindingContext as Enemy;
-            var result = await DisplayAlert("Видалення", "Ви дійсно бажаєте видалити монстра?", "Видалити", "Відмінити");
+            var result = await DisplayAlert(Translator.Instance["Removal"],
+                                            Translator.Instance["RemoveTheMonster"],
+                                            Translator.Instance["Delete"],
+                                            Translator.Instance["Cancel"]);
             if (result && enemy != null)
             {
                 int index = Enemies.IndexOf(enemy);
@@ -135,7 +180,11 @@ namespace HowItLooks
             var enemy = label?.BindingContext as Enemy;
             if (enemy == null) return;
 
-            string result = await DisplayPromptAsync("Зміна ініціативи", "Вкажіть нове число ініціативи:", keyboard: Keyboard.Numeric);
+            string result = await DisplayPromptAsync(Translator.Instance["ChangeOfInitiative"],
+                                                     Translator.Instance["EnterNewInitiative"],
+                                                     "OK",
+                                                     Translator.Instance["Cancel"],
+                                                     keyboard: Keyboard.Numeric);
             if (int.TryParse(result, out int newInitiative))
             {
                 enemy.Initiative = newInitiative;
@@ -184,10 +233,10 @@ namespace HowItLooks
 
             if (_isRoundStarted && index == 0 && previousIndex == sorted.Count - 1)
             {
-                if (_roundCounter > 1)
+                if (RoundCounter > 1)
                 {
-                    _roundCounter--;
-                    RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                    RoundCounter--;
+                    OnPropertyChanged(nameof(StartEndButtonText));
                 }
             }
             SetActiveEnemy(sorted[previousIndex]);
@@ -203,8 +252,8 @@ namespace HowItLooks
 
             if (_isRoundStarted && index == sorted.Count - 1 && nextIndex == 0)
             {
-                _roundCounter++;
-                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                RoundCounter++;
+                OnPropertyChanged(nameof(StartEndButtonText));
             }
             SetActiveEnemy(sorted[nextIndex]);
         }
@@ -221,10 +270,8 @@ namespace HowItLooks
             if (!_isRoundStarted)
             {
                 _isRoundStarted = true;
-                _roundCounter = 1;
-                RoundCounterLabel.Text = $"Раунд: {_roundCounter}";
+                RoundCounter = 1;
                 RoundCounterBorder.IsVisible = true;
-                StartEndButton.Text = "Кінець";
 
                 var sorted = Enemies.OrderByDescending(e => e.Initiative).ToList();
                 if (sorted.Count > 0)
@@ -234,8 +281,8 @@ namespace HowItLooks
             {
                 _isRoundStarted = false;
                 RoundCounterBorder.IsVisible = false;
-                StartEndButton.Text = "Початок";
             }
+            OnPropertyChanged(nameof(StartEndButtonText));
         }
     }
 }
