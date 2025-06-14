@@ -7,22 +7,60 @@
     Shell.FlyoutBehavior="Flyout"
     Title="DS Game Launch">
 
-    <FlyoutItem Title="Основна"
-                Icon="campaign.png">
-        <Tab Title="Основна">
-            <ShellContent
-                Title="Основна"
-                ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="Глобальні"
-                Icon="earth.png">
-        <Tab Title="Глобальні">
-            <ShellContent
-                Title="Глобальні"
-                ContentTemplate="{DataTemplate local:Globals}"
-                Route="Globals" />
-        </Tab>
-    </FlyoutItem>
+    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Route="Globals" ContentTemplate="{DataTemplate local:Globals}" />
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="10" Spacing="20">
+
+            <Grid Padding="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMainTapped" />
+                </Grid.GestureRecognizers>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image x:Name="MainIcon"
+                       Source="campaign.png"
+                       Style="{StaticResource FlyoutMenuIconStyle}"/>
+                <Label Text="Основна"
+                       Grid.Column="1"
+                       Style="{StaticResource FlyoutMenuLabelStyle}" />
+            </Grid>
+
+            <Grid Padding="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGlobalsTapped" />
+                </Grid.GestureRecognizers>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image x:Name="GlobalsIcon"
+                       Source="earth.png"
+                       Style="{StaticResource FlyoutMenuIconStyle}"/>
+                <Label Text="Глобальні"
+                       Grid.Column="1"
+                       Style="{StaticResource FlyoutMenuLabelStyle}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <Grid Padding="10"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ImageButton
+                x:Name="ThemeToggleButton"
+                Grid.Column="1"
+                Style="{StaticResource ThemeToggleButtonStyle}"
+                Clicked="OnThemeIconClicked" />
+        </Grid>
+    </Shell.FlyoutFooter>
 </Shell>
