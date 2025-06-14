@@ -69,6 +69,21 @@
 	  <Compile Update="Globals.xaml.cs">
 	    <DependentUpon>Globals.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Resources\Languages\ENG.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ENG.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Languages\Resource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Languages\UKR.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>UKR.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,6 +94,24 @@
 
 	<ItemGroup>
 	  <Folder Include="ViewModels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Languages\ENG.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ENG.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Languages\Resource.eng.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Languages\Resource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Languages\UKR.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>UKR.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,7 @@
-﻿namespace HowItLooks
+﻿using HowItLooks.Extension;
+using System.Globalization;
+
+namespace HowItLooks
 {
     public partial class AppShell : Shell
     {
@@ -55,6 +58,20 @@
         {
             await GoToAsync("//Globals");
             Shell.Current.FlyoutIsPresented = false;
+        }
+        private void OnLanguagePickerChanged(object sender, EventArgs e)
+        {
+            var selectedLanguage = LanguagePicker.SelectedItem as string;
+
+            if (selectedLanguage == "Українська")
+            {
+                Translator.Instance.SetCulture(new CultureInfo(""));
+            }
+            else if (selectedLanguage == "English")
+            {
+                Translator.Instance.SetCulture(new CultureInfo("en"));
+            }
+
         }
     }
 }

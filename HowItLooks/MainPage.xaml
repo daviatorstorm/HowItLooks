@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HowItLooks.MainPage"
-             Title="Основна">
-
+             xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
+             xmlns:extension="clr-namespace:HowItLooks.Extension"
+             Title="{extension:Translate Key=Main}">
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout
@@ -13,8 +14,8 @@
                     Style="{StaticResource RoundCounterBorderStyle}"
                     IsVisible="False">
                     <Label x:Name="RoundCounterLabel"
-                       Text="Раунд: 1"
-                       Style="{StaticResource RoundCounterLabelStyle}" />
+                       Text="{Binding RoundDisplayText}"
+                       Style="{StaticResource RoundCounterLabelStyle}"/>
                 </Border>
 
                 <CollectionView ItemsSource="{Binding Enemies}">
@@ -109,10 +110,10 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                
+
                 <Button 
                     x:Name="AddListItem"
-                    Text="Додати" 
+                    Text="{extension:Translate Key=Add}"
                     Clicked="AddEnemyClicked"
                     Margin="0,0,0,10"/>
             </VerticalStackLayout>
@@ -126,7 +127,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0"
-                    Text="Попередній"
+                    Text="{extension:Translate Key=Previous}"
                     Clicked="PreviousEnemy_Clicked"
                     Style="{StaticResource NavButtonStyle}"/>
             <Image Grid.Column="0"
@@ -135,14 +136,14 @@
                     HorizontalOptions="Start" />
             <Button Grid.Column="1"
                     x:Name="StartEndButton"
-                    Text="Почати"
+                    Text="{Binding StartEndButtonText}"
                     Clicked="StartEndButton_Clicked"
                     Style="{StaticResource StartEndButtonStyle}"/>
             <Button Grid.Column="2"
-                    Text="Наступний"
+                    Text="{extension:Translate Key=Next}"
                     Clicked="NextEnemy_Clicked"
-                   Style="{StaticResource NavButtonStyle}"/>
-            <Image Grid.Column="2"
+                    Style="{StaticResource NavButtonStyle}"/>
+            <Image  Grid.Column="2"
                     Source="arrow_forward_ios.png"
                     Margin="20,0"
                     HorizontalOptions="End" />
