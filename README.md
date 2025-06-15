@@ -16,16 +16,16 @@ Functionalities:
 - ~~**Glossary**. You can create monsters globaly and add them to your scene~~
 - **Deploys**. Planning to deploy this app into Windows Store, Android Play Market and to 
 Apple Store
-- Add round number when encounter start
-- Add themes dark/light
+- ~~Add round number when encounter start~~
+- ~~Add themes dark/light~~
 - Add armor class
 - Add creature type:
 	- Adventurer
 	- Monster
 	- NPC
-- Add multi language support
-	- English
-	- Ukrainian
+- ~~Add multi language support~~
+	- ~~English~~
+	- ~~Ukrainian~~
 - Add temporary hit points
 
 ## Contribute
