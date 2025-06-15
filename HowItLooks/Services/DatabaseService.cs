@@ -1,5 +1,5 @@
-﻿using HowItLooks.Common;
-using HowItLooks.Entities;
+﻿using HowItLooks.Entities;
+using HowItLooks.Helpers;
 using SQLite;
 
 namespace HowItLooks.Services
@@ -10,8 +10,8 @@ namespace HowItLooks.Services
 
         public DatabaseService()
         {
-            _db = new SQLiteConnection(Constants.DBPath);
-            _db.CreateTable<EnemyEntity>(); // Create table if not exists
+            _db = DatabaseHelper.CreateDatabaseConnection();
+            _db.CreateTable<EnemyEntity>();
         }
 
         public List<EnemyEntity> GetAllMonsters()
