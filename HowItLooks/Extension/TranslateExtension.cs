@@ -1,9 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-
-namespace HowItLooks.Extension
+﻿namespace HowItLooks.Extension
 {
     [ContentProperty(nameof(Key))]
     public class TranslateExtension : IMarkupExtension<BindingBase>

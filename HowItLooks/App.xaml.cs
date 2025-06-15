@@ -1,9 +1,12 @@
-﻿namespace HowItLooks
+﻿using HowItLooks.Services;
+
+namespace HowItLooks
 {
     public partial class App : Application
     {
-        public App()
+        public App(StartupService startupService)
         {
+            startupService.Run();
             InitializeComponent();
         }
 

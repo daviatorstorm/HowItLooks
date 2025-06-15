@@ -21,18 +21,20 @@
                 <CollectionView ItemsSource="{Binding Enemies}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Padding="3">
+                            <Border>
                                 <Border.Stroke>
                                     <SolidColorBrush Color="Transparent" />
                                 </Border.Stroke>
                                 <Border.Triggers>
                                     <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
                                         <Setter Property="Stroke" Value="MediumPurple" />
-                                        <Setter Property="StrokeThickness" Value="3" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                        <Setter Property="Padding" Value="0" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
                                         <Setter Property="Stroke" Value="Transparent" />
                                         <Setter Property="StrokeThickness" Value="0" />
+                                        <Setter Property="Padding" Value="2" />
                                     </DataTrigger>
                                 </Border.Triggers>
 
@@ -44,13 +46,13 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label 
                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
-                                        Text="{Binding Name}" FontSize="18" 
+                                        Text="{Binding Name}" FontSize="25" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         Margin="5"
                                         BindingContext="{Binding}">
@@ -60,7 +62,7 @@
                                     </Label>
                                     <Label 
                                         Grid.Row="1" Grid.Column="0"
-                                        Text="{Binding Initiative}" FontSize="14" 
+                                        Text="{Binding Initiative}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
@@ -79,7 +81,6 @@
                                         Style="{StaticResource EnemyBtn}" />
                                     <Label 
                                         Grid.Row="1" Grid.Column="2"
-                                        Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="14" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
@@ -87,6 +88,12 @@
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="HPLabel_Clicked"/>
                                         </Label.GestureRecognizers>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="" FontFamily="FluentSystemIcons-Filled" />
+                                                <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="BravoSCT" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
                                     </Label>
                                     <Button 
                                         Grid.Row="1" Grid.Column="3"
@@ -132,7 +139,7 @@
                     Style="{StaticResource NavButtonStyle}"/>
             <Image Grid.Column="0"
                     Source="arrow_back_ios.png"
-                    Margin="20,0"
+                    Margin="10,0"
                     HorizontalOptions="Start" />
             <Button Grid.Column="1"
                     x:Name="StartEndButton"
@@ -145,7 +152,7 @@
                     Style="{StaticResource NavButtonStyle}"/>
             <Image  Grid.Column="2"
                     Source="arrow_forward_ios.png"
-                    Margin="20,0"
+                    Margin="10,0"
                     HorizontalOptions="End" />
         </Grid>
     </Grid>

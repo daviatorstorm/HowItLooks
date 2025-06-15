@@ -10,6 +10,8 @@ namespace HowItLooks
             InitializeComponent();
 
             var savedTheme = Preferences.Get("AppTheme", "Light");
+            var lang = Preferences.Get("Lang", "English");
+            LanguagePicker.SelectedItem = lang;
             App.Current.UserAppTheme = savedTheme == "Dark" ? AppTheme.Dark : AppTheme.Light;
 
             this.Loaded += (_, __) =>
@@ -72,6 +74,7 @@ namespace HowItLooks
                 Translator.Instance.SetCulture(new CultureInfo("en"));
             }
 
+            Preferences.Set("Lang", selectedLanguage);
         }
     }
 }

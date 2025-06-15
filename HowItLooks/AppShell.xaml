@@ -62,7 +62,6 @@
                 Margin="0,0,170,0"
                 Grid.Column="0"
                 WidthRequest="90"
-                Title="Language"
                 SelectedIndexChanged="OnLanguagePickerChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">

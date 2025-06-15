@@ -66,7 +66,7 @@ public class Enemy : INotifyPropertyChanged
         }
     }
 
-    public string HitPointsLabel { get => $"{HitPointsLeft} / {HitPoints} HP"; }
+    public string HitPointsLabel { get => $"{HitPointsLeft} / {HitPoints}"; }
 
     public Enemy(string name, int hitPoints, int initiative = 0)
     {

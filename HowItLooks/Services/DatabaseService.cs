@@ -1,4 +1,5 @@
-﻿using HowItLooks.Entities;
+﻿using HowItLooks.Common;
+using HowItLooks.Entities;
 using SQLite;
 
 namespace HowItLooks.Services
@@ -9,8 +10,7 @@ namespace HowItLooks.Services
 
         public DatabaseService()
         {
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "local.db");
-            _db = new SQLiteConnection(dbPath);
+            _db = new SQLiteConnection(Constants.DBPath);
             _db.CreateTable<EnemyEntity>(); // Create table if not exists
         }
 
