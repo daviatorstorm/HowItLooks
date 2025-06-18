@@ -11,6 +11,8 @@ public class Enemy : INotifyPropertyChanged
     private int _hpLeft;
     private int _initiative;
     private bool _isActive;
+    private int _armorClass;
+    private int _tempHitPoints;
 
     public int Id { get; set; }
     public string Name { get => _name; set
@@ -28,6 +30,32 @@ public class Enemy : INotifyPropertyChanged
             {
                 _hp = value;
                 OnPropertyChanged("HitPointsLabel");
+            }
+        }
+    }
+    public int ArmorClass
+    {
+        get => _armorClass;
+        set
+        {
+            value = Math.Clamp(value, 0, 99);
+            if (_armorClass != value)
+            {
+                _armorClass = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    public int TempHitPoints
+    {
+        get => _tempHitPoints;
+        set
+        {
+            if (_tempHitPoints != value)
+            {
+                _tempHitPoints = value;
+                OnPropertyChanged(nameof(TempHitPoints));
+                OnPropertyChanged(nameof(HitPointsLabel));
             }
         }
     }
@@ -66,7 +94,11 @@ public class Enemy : INotifyPropertyChanged
         }
     }
 
-    public string HitPointsLabel { get => $"{HitPointsLeft} / {HitPoints}"; }
+    public string HitPointsLabel { get => 
+        TempHitPoints > 0
+            ? $"{HitPointsLeft} / {HitPoints} +{TempHitPoints}"
+            : $"{HitPointsLeft} / {HitPoints}";
+    }
 
     public Enemy(string name, int hitPoints, int initiative = 0)
     {
@@ -84,6 +116,8 @@ public class Enemy : INotifyPropertyChanged
         Initiative = entity.Initiative;
         HitPointsLeft = entity.HitPointsLeft;
         IsActive = entity.IsActive;
+        ArmorClass = entity.ArmorClass;
+        TempHitPoints = entity.TempHitPoints;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -108,9 +142,23 @@ public class Enemy : INotifyPropertyChanged
 
     public void DecreaseHitPoints(int hitPoints)
     {
-        if (HitPointsLeft - hitPoints < 0)
-            HitPointsLeft = 0;
-        else
-            HitPointsLeft -= hitPoints;
+        if (TempHitPoints > 0)
+        {
+            if (hitPoints <= TempHitPoints)
+            {
+                TempHitPoints -= hitPoints;
+                hitPoints = 0;
+            }
+            else
+            {
+                hitPoints -= TempHitPoints;
+                TempHitPoints = 0;
+            }
+        }
+
+        HitPointsLeft -= hitPoints;
+        if (HitPointsLeft < 0) HitPointsLeft = 0;
+
+        OnPropertyChanged(nameof(HitPointsLabel));
     }
 }

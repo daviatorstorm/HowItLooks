@@ -195,4 +195,19 @@
   <data name="Save" xml:space="preserve">
     <value>Зберегти</value>
   </data>
+  <data name="ArmorClass" xml:space="preserve">
+    <value>Клас броні</value>
+  </data>
+  <data name="EnterNewAC" xml:space="preserve">
+    <value>Введіть новий КБ</value>
+  </data>
+  <data name="ChangeRegularHP" xml:space="preserve">
+    <value>Зміна звичайного HP</value>
+  </data>
+  <data name="ChangeTempHP" xml:space="preserve">
+    <value>Зміна тимчасового HP</value>
+  </data>
+  <data name="HowMuchToChangeTempHP" xml:space="preserve">
+    <value>На скільки змінити тимчасові НР?</value>
+  </data>
 </root>

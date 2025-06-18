@@ -88,6 +88,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Клас броні.
+        /// </summary>
+        public static string ArmorClass {
+            get {
+                return ResourceManager.GetString("ArmorClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Відмінити.
         /// </summary>
         public static string Cancel {
@@ -124,6 +133,24 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Зміна звичайного HP.
+        /// </summary>
+        public static string ChangeRegularHP {
+            get {
+                return ResourceManager.GetString("ChangeRegularHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Зміна тимчасового HP.
+        /// </summary>
+        public static string ChangeTempHP {
+            get {
+                return ResourceManager.GetString("ChangeTempHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Видалити.
         /// </summary>
         public static string Delete {
@@ -138,6 +165,15 @@ namespace HowItLooks.Resources.Languages {
         public static string End {
             get {
                 return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введіть новий КБ.
+        /// </summary>
+        public static string EnterNewAC {
+            get {
+                return ResourceManager.GetString("EnterNewAC", resourceCulture);
             }
         }
         
@@ -165,6 +201,15 @@ namespace HowItLooks.Resources.Languages {
         public static string HowMuchToChangeHP {
             get {
                 return ResourceManager.GetString("HowMuchToChangeHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to На скільки змінити тимчасові НР?.
+        /// </summary>
+        public static string HowMuchToChangeTempHP {
+            get {
+                return ResourceManager.GetString("HowMuchToChangeTempHP", resourceCulture);
             }
         }
         

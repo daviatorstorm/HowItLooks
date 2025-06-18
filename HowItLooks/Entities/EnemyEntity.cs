@@ -30,6 +30,8 @@ public class EnemyEntity
         HitPointsLeft = enemy.HitPointsLeft;
         Initiative = enemy.Initiative;
         IsActive = enemy.IsActive;
+        ArmorClass = enemy.ArmorClass;
+        TempHitPoints = enemy.TempHitPoints;
     }
 }
 
