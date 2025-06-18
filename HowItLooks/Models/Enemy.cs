@@ -51,12 +51,8 @@ public class Enemy : INotifyPropertyChanged
         get => _tempHitPoints;
         set
         {
-            if (_tempHitPoints != value)
-            {
-                _tempHitPoints = value;
-                OnPropertyChanged(nameof(TempHitPoints));
-                OnPropertyChanged(nameof(HitPointsLabel));
-            }
+            _tempHitPoints = value;
+            OnPropertyChanged(nameof(HitPointsLabel));
         }
     }
     public int HitPointsLeft { get => _hpLeft; set
@@ -140,23 +136,23 @@ public class Enemy : INotifyPropertyChanged
             HitPointsLeft += hitPoints;
     }
 
-    public void DecreaseHitPoints(int hitPoints)
+    public void DecreaseHitPoints(int damage)
     {
         if (TempHitPoints > 0)
         {
-            if (hitPoints <= TempHitPoints)
+            if (damage <= TempHitPoints)
             {
-                TempHitPoints -= hitPoints;
-                hitPoints = 0;
+                TempHitPoints -= damage;
+                damage = 0;
             }
             else
             {
-                hitPoints -= TempHitPoints;
+                damage -= TempHitPoints;
                 TempHitPoints = 0;
             }
         }
 
-        HitPointsLeft -= hitPoints;
+        HitPointsLeft -= damage;
         if (HitPointsLeft < 0) HitPointsLeft = 0;
 
         OnPropertyChanged(nameof(HitPointsLabel));
