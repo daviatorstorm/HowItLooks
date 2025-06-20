@@ -18,7 +18,7 @@ Functionalities:
 Apple Store
 - ~~Add round number when encounter start~~
 - ~~Add themes dark/light~~
-- Add armor class
+- ~~Add armor class~~
 - Add creature type:
 	- Adventurer
 	- Monster
@@ -26,7 +26,7 @@ Apple Store
 - ~~Add multi language support~~
 	- ~~English~~
 	- ~~Ukrainian~~
-- Add temporary hit points
+- ~~Add temporary hit points~~
 
 ## Contribute
 
