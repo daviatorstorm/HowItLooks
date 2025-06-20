@@ -51,7 +51,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label 
-                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                                        Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"
                                         Text="{Binding Name}" FontSize="25" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         Margin="5"
@@ -60,8 +60,24 @@
                                             <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
+                                    <Image Grid.Row="1" >
+                                        <Image.Source>
+                                            <AppThemeBinding Light="shield_dark.png" Dark="shield.png" />
+                                        </Image.Source>
+                                    </Image>    
                                     <Label 
-                                        Grid.Row="1" Grid.Column="0"
+                                        Grid.Row="1"  
+                                        Text="{Binding ArmorClass}" FontSize="20" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="0"
                                         Text="{Binding Initiative}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
@@ -90,7 +106,7 @@
                                         </Label.GestureRecognizers>
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="" FontFamily="FluentSystemIcons-Filled" />
+                                                <Span Text=" " FontFamily="FluentSystemIcons-Filled" />
                                                 <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="BravoSCT" />
                                             </FormattedString>
                                         </Label.FormattedText>

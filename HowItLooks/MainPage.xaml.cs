@@ -118,16 +118,36 @@ namespace HowItLooks
         {
             var button = sender as Label;
             var enemy = button?.BindingContext as Enemy;
-            string result = await DisplayPromptAsync(Translator.Instance["ChangeHP"],
-                                                     Translator.Instance["HowMuchToChangeHP"],
-                                                     "OK",
-                                                     Translator.Instance["Cancel"],
-                                                     keyboard: Keyboard.Numeric);
-            if (!int.TryParse(result, out int hp)) return;
-            if (enemy != null)
+            if (enemy == null) return;
+
+            string action = await DisplayActionSheet(Translator.Instance["ChangeHP"], Translator.Instance["Cancel"], null,
+                                             Translator.Instance["ChangeRegularHP"], Translator.Instance["ChangeTempHP"]);
+
+            if (action == Translator.Instance["ChangeRegularHP"])
             {
-                enemy.UpdateHitPoints(hp);
-                _db.UpdateMonster(new EnemyEntity(enemy));
+                string result = await DisplayPromptAsync(Translator.Instance["ChangeHP"],
+                                                         Translator.Instance["HowMuchToChangeHP"],
+                                                         "OK", Translator.Instance["Cancel"],
+                                                         keyboard: Keyboard.Numeric);
+
+                if (int.TryParse(result, out int hp))
+                {
+                    enemy.UpdateHitPoints(hp);
+                    _db.UpdateMonster(new EnemyEntity(enemy));
+                }
+            }
+            else if (action == Translator.Instance["ChangeTempHP"])
+            {
+                string result = await DisplayPromptAsync(Translator.Instance["ChangeTempHP"],
+                                                         Translator.Instance["HowMuchToChangeTempHP"],
+                                                         "OK", Translator.Instance["Cancel"],
+                                                         keyboard: Keyboard.Numeric);
+
+                if (int.TryParse(result, out int tempHp))
+                {
+                    enemy.TempHitPoints = tempHp;
+                    _db.UpdateMonster(new EnemyEntity(enemy));
+                }
             }
         }
 
@@ -283,6 +303,27 @@ namespace HowItLooks
                 RoundCounterBorder.IsVisible = false;
             }
             OnPropertyChanged(nameof(StartEndButtonText));
+        }
+
+        private async void ArmorClassLabel_Clicked(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            var enemy = label?.BindingContext as Enemy;
+            
+            string result = await DisplayPromptAsync(Translator.Instance["ArmorClass"],
+                                                     Translator.Instance["EnterNewAC"],
+                                                     "OK",
+                                                     Translator.Instance["Cancel"],
+                                                     maxLength: 2,
+                                                     keyboard: Keyboard.Numeric);
+            if (!int.TryParse(result, out int newAC)) return;
+
+            if (enemy != null)
+            {
+                enemy.ArmorClass = newAC;
+                _db.UpdateMonster(new EnemyEntity(enemy));
+            }
+
         }
     }
 }
