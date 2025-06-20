@@ -32,6 +32,7 @@ public class EnemyEntity
         IsActive = enemy.IsActive;
         ArmorClass = enemy.ArmorClass;
         TempHitPoints = enemy.TempHitPoints;
+        CreatureType = enemy.CreatureType;
     }
 }
 

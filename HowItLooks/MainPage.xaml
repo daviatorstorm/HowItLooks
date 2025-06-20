@@ -36,6 +36,30 @@
                                         <Setter Property="StrokeThickness" Value="0" />
                                         <Setter Property="Padding" Value="2" />
                                     </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="Player">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource PlayerBaseLight}"
+                                                               Dark="{StaticResource PlayerBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="Monster">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource MonsterBaseLight}"
+                                                               Dark="{StaticResource MonsterBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="NPC">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource NPCBaseLight}"
+                                                               Dark="{StaticResource NPCBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
                                 </Border.Triggers>
 
                                 <Grid>
@@ -74,6 +98,20 @@
                                         BindingContext="{Binding}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Image  Grid.Row="0" Grid.Column="4" 
+                                            Source="papyrus"/>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="4"
+                                        Text="{Binding CreatureType}" 
+                                        FontSize="20" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="CreatureTypeLabel_Clicked" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Label 
