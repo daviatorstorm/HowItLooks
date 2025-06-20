@@ -210,4 +210,16 @@
   <data name="HowMuchToChangeTempHP" xml:space="preserve">
     <value>На скільки змінити тимчасові НР?</value>
   </data>
+  <data name="ChangeCreatureType" xml:space="preserve">
+    <value>Змінити тип істоти</value>
+  </data>
+  <data name="ChooseCreatureType" xml:space="preserve">
+    <value>Виберіть тип істоти</value>
+  </data>
+  <data name="AddACreature" xml:space="preserve">
+    <value>Додати істоту</value>
+  </data>
+  <data name="NameTheCreature" xml:space="preserve">
+    <value>Назвіть істоту:</value>
+  </data>
 </root>

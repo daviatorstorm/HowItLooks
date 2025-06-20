@@ -70,6 +70,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Додати істоту.
+        /// </summary>
+        public static string AddACreature {
+            get {
+                return ResourceManager.GetString("AddACreature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Додати монстра.
         /// </summary>
         public static string AddAMonster {
@@ -102,6 +111,15 @@ namespace HowItLooks.Resources.Languages {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Змінити тип істоти.
+        /// </summary>
+        public static string ChangeCreatureType {
+            get {
+                return ResourceManager.GetString("ChangeCreatureType", resourceCulture);
             }
         }
         
@@ -147,6 +165,15 @@ namespace HowItLooks.Resources.Languages {
         public static string ChangeTempHP {
             get {
                 return ResourceManager.GetString("ChangeTempHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виберіть тип істоти.
+        /// </summary>
+        public static string ChooseCreatureType {
+            get {
+                return ResourceManager.GetString("ChooseCreatureType", resourceCulture);
             }
         }
         
@@ -246,6 +273,15 @@ namespace HowItLooks.Resources.Languages {
         public static string Main {
             get {
                 return ResourceManager.GetString("Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назвіть істоту:.
+        /// </summary>
+        public static string NameTheCreature {
+            get {
+                return ResourceManager.GetString("NameTheCreature", resourceCulture);
             }
         }
         

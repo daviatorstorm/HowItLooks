@@ -48,4 +48,13 @@
     <Color x:Key="RoundCounterStrokeDark">#666</Color>
     <Color x:Key="RoundCounterTextLight">#000</Color>
     <Color x:Key="RoundCounterTextDark">#FFF</Color>
+
+    <Color x:Key="PlayerBaseLight">#7F65E755</Color>
+    <Color x:Key="PlayerBaseDark">#1965E755</Color>
+
+    <Color x:Key="MonsterBaseLight">#7FE05555</Color>
+    <Color x:Key="MonsterBaseDark">#19E05555</Color>
+    
+    <Color x:Key="NPCBaseLight">#7F5688FF</Color>
+    <Color x:Key="NPCBaseDark">#335688FF</Color>
 </ResourceDictionary>

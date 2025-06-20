@@ -210,4 +210,16 @@
   <data name="HowMuchToChangeTempHP" xml:space="preserve">
     <value>How much to change temporary HP?</value>
   </data>
+  <data name="ChangeCreatureType" xml:space="preserve">
+    <value>Change creature type</value>
+  </data>
+  <data name="ChooseCreatureType" xml:space="preserve">
+    <value>Choose creature type</value>
+  </data>
+  <data name="AddACreature" xml:space="preserve">
+    <value>Add a creature</value>
+  </data>
+  <data name="NameTheCreature" xml:space="preserve">
+    <value>Name the creature:</value>
+  </data>
 </root>

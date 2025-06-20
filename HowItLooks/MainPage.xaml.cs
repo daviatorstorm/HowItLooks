@@ -65,14 +65,33 @@ namespace HowItLooks
 
         private async void AddEnemyClicked(object sender, EventArgs e)
         {
-            var newMonsterName = await DisplayPromptAsync(Translator.Instance["AddAMonster"],
-                                                          Translator.Instance["NameTheMonster"],
+            var typeMap = new Dictionary<string, CreatureType>
+            {
+                { "Player", CreatureType.Player },
+                { "Monster", CreatureType.Monster },
+                { "NPC", CreatureType.NPC }
+            };
+            
+            string selected = await DisplayActionSheet(Translator.Instance["ChooseCreatureType"],
+                                                       Translator.Instance["Cancel"],
+                                                       null,
+                                                       typeMap.Keys.ToArray());
+
+            if (string.IsNullOrWhiteSpace(selected) || selected == Translator.Instance["Cancel"] || !typeMap.ContainsKey(selected))
+                return;
+
+            CreatureType selectedType = typeMap[selected];
+
+            var newMonsterName = await DisplayPromptAsync(Translator.Instance["AddACreature"],
+                                                          Translator.Instance["NameTheCreature"],
                                                           Translator.Instance["Save"],
                                                           Translator.Instance["Cancel"]);
 
             if (string.IsNullOrWhiteSpace(newMonsterName)) return;
 
             var entity = _db.AddMonster(newMonsterName);
+            entity.CreatureType = selectedType;
+            _db.UpdateMonster(entity);
             var newEnemy = new Enemy(entity);
             Enemies.Add(newEnemy);
 
@@ -324,6 +343,33 @@ namespace HowItLooks
                 _db.UpdateMonster(new EnemyEntity(enemy));
             }
 
+        }
+
+        private async void CreatureTypeLabel_Clicked(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            var enemy = label?.BindingContext as Enemy;
+            if (enemy == null) return;
+
+            string selected = await DisplayActionSheet(Translator.Instance["ChangeCreatureType"],
+                                                       Translator.Instance["Cancel"],
+                                                       null,
+                                                       "Player",
+                                                       "Monster",
+                                                       "NPC");
+
+            if (selected == null || selected == Translator.Instance["Cancel"])
+                return;
+
+            enemy.CreatureType = selected switch
+            {
+                "Player" => CreatureType.Player,
+                "Monster" => CreatureType.Monster,
+                "NPC" => CreatureType.NPC,
+                _ => enemy.CreatureType
+            };
+
+            _db.UpdateMonster(new EnemyEntity(enemy));
         }
     }
 }
