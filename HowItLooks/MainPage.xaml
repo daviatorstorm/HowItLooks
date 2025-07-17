@@ -70,12 +70,23 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition />
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label 
-                                        Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"
+                                        Grid.Row="0" Grid.Column="0"
+                                        Text="{Binding Initiative}" FontSize="20" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                                         Text="{Binding Name}" FontSize="25" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         Margin="5"
@@ -84,24 +95,10 @@
                                             <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Image Grid.Row="1" >
-                                        <Image.Source>
-                                            <AppThemeBinding Light="shield_dark.png" Dark="shield.png" />
-                                        </Image.Source>
-                                    </Image>    
-                                    <Label 
-                                        Grid.Row="1"  
-                                        Text="{Binding ArmorClass}" FontSize="20" 
-                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
-                                        VerticalTextAlignment="Center"
-                                        HorizontalTextAlignment="Center"
-                                        BindingContext="{Binding}">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <Image  Grid.Row="0" Grid.Column="4" 
-                                            Source="papyrus"/>
+
+                                    <Image  
+                                        Grid.Row="0" Grid.Column="4" 
+                                            Source="papyrus" />
                                     <Label 
                                         Grid.Row="0" Grid.Column="4"
                                         Text="{Binding CreatureType}" 
@@ -114,15 +111,20 @@
                                             <TapGestureRecognizer Tapped="CreatureTypeLabel_Clicked" />
                                         </Label.GestureRecognizers>
                                     </Label>
+                                    <Image Grid.Row="1" >
+                                        <Image.Source>
+                                            <AppThemeBinding Light="shield_dark.png" Dark="shield.png" />
+                                        </Image.Source>
+                                    </Image>
                                     <Label 
-                                        Grid.Row="0" Grid.Column="0"
-                                        Text="{Binding Initiative}" FontSize="20" 
+                                        Grid.Row="1"  
+                                        Text="{Binding ArmorClass}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
                                         BindingContext="{Binding}">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
+                                            <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Button 

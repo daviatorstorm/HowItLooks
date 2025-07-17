@@ -6,17 +6,29 @@
 
         public override int Version => 1;
 
-        public override string GetSql()
+        public override List<string> GetSqlScripts()
         {
-            return @"
-                CREATE TABLE Enemies (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Name TEXT NOT NULL,
-                    HitPoints INTEGER NOT NULL,
-                    HitPointsLeft INTEGER NOT NULL,
-                    Initiative INTEGER NOT NULL,
-                    IsActive BOOLEAN NOT NULL DEFAULT 1
-                );";
+            return new List<string>
+            {
+                @"
+                    CREATE TABLE Enemies (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        Name TEXT NOT NULL,
+                        HitPoints INTEGER NOT NULL,
+                        HitPointsLeft INTEGER NOT NULL,
+                        Initiative INTEGER NOT NULL,
+                        IsActive BOOLEAN NOT NULL DEFAULT 1
+                );",
+                @"
+                    ALTER TABLE Enemies ADD COLUMN ArmorClass INTEGER;
+                ",
+                @"
+                    ALTER TABLE Enemies ADD COLUMN TempHitPoints INTEGER;
+                ",
+                @"
+                    ALTER TABLE Enemies ADD COLUMN CreatureType INTEGER;
+                "
+            };
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using HowItLooks.Helpers;
 using SQLite;
-using static SQLite.SQLiteConnection;
 
 namespace HowItLooks.Services;
 
@@ -25,9 +24,11 @@ public class StartupService
         var currentVersion = _dbConnection.ExecuteScalar<int>("PRAGMA user_version;");
         _migrationsService.Migrate(currentVersion, migration =>
         {
-            var result = _dbConnection.Execute(migration.GetSql());
-            result = _dbConnection.Execute($"PRAGMA user_version = {migration.Version};");
+            foreach (var script in migration.GetSqlScripts())
+            {
+                _dbConnection.Execute(script);
+            }
+            _dbConnection.Execute($"PRAGMA user_version = {migration.Version};");
         });
-        List<ColumnInfo> columns = _dbConnection.GetTableInfo("Enemies");
     }
 }

@@ -14,9 +14,6 @@ namespace HowItLooks.Services
         private void Init()
         {
             _migrations.Add(new _150620251724_Initial());
-            _migrations.Add(new _150620252240_AddArmorClass());
-            _migrations.Add(new _160620250021_AddTempHP());
-            _migrations.Add(new _160620250039_AddCreatureType());
         }
 
         public void Migrate(int currentVersion, Action<BaseMigration> iter)
