@@ -222,4 +222,82 @@
   <data name="NameTheCreature" xml:space="preserve">
     <value>Назвіть істоту:</value>
   </data>
+  <data name="OptionsFor" xml:space="preserve">
+    <value>Варіанти для</value>
+  </data>
+  <data name="AddAllEnemiesToMainPage" xml:space="preserve">
+    <value>Додати всіх ворогів на головну сторінку</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Назва групи</value>
+  </data>
+  <data name="EnterAGroupName" xml:space="preserve">
+    <value>Введіть назву групи:</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="AGroupWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Група з такою назвою вже існує</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Так</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Ні</value>
+  </data>
+  <data name="AndAllEnemiesInIt" xml:space="preserve">
+    <value>і всі вороги в ньому?</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Група</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>видалено</value>
+  </data>
+  <data name="EnemiesFrom" xml:space="preserve">
+    <value>Вороги з</value>
+  </data>
+  <data name="AddedToMainPage" xml:space="preserve">
+    <value>додано на головну сторінку</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Інформація</value>
+  </data>
+  <data name="GroupHasNoEnemies" xml:space="preserve">
+    <value>Група не має ворогів</value>
+  </data>
+  <data name="HowMuchHp" xml:space="preserve">
+    <value>Скільки HP</value>
+  </data>
+  <data name="HP" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Групи</value>
+  </data>
+  <data name="MonsterGroups" xml:space="preserve">
+    <value>Групи монстрів</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Пошук...</value>
+  </data>
+  <data name="AddToBattle" xml:space="preserve">
+    <value>Додати до бою</value>
+  </data>
+  <data name="ThisGroupHasNoEnemies" xml:space="preserve">
+    <value>У цієї групи немає ворогів</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успіх</value>
+  </data>
+  <data name="AddedInMainPage" xml:space="preserve">
+    <value>додано на головну сторінку!</value>
+  </data>
+  <data name="ToTheMainPage" xml:space="preserve">
+    <value>на головну сторінку</value>
+  </data>
 </root>

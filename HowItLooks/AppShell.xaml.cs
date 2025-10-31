@@ -48,6 +48,9 @@ namespace HowItLooks
 
             if (GlobalsIcon != null)
                 GlobalsIcon.Source = isDark ? "earth_light.png" : "earth.png";
+
+            if (GroupsIcon != null)
+                GroupsIcon.Source = isDark ? "groups_light.png" : "groups_dark.png";
         }
 
         private async void OnMainTapped(object sender, EventArgs e)
@@ -59,6 +62,12 @@ namespace HowItLooks
         private async void OnGlobalsTapped(object sender, EventArgs e)
         {
             await GoToAsync("//Globals");
+            Shell.Current.FlyoutIsPresented = false;
+        }
+
+        private async void OnGroupsTapped(object sender, EventArgs e)
+        {
+            await GoToAsync("//Groups");
             Shell.Current.FlyoutIsPresented = false;
         }
         private void OnLanguagePickerChanged(object sender, EventArgs e)

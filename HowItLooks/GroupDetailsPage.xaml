@@ -1,23 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HowItLooks.MainPage"
              xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
              xmlns:extension="clr-namespace:HowItLooks.Extension"
-             Title="{extension:Translate Key=Main}">
-    <!--AeroMaticsStencil--> <!--BravoSCT-->
+             x:Class="HowItLooks.GroupDetailsPage"
+             Title="{extension:Translate Key=Groups}">
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout
-            Padding="10,0"
-            Spacing="25">
+                Padding="10,0"
+                Spacing="25">
                 <Border x:Name="RoundCounterBorder"
-                    Style="{StaticResource RoundCounterBorderStyle}"
-                    IsVisible="False">
+                Style="{StaticResource RoundCounterBorderStyle}"
+                IsVisible="False">
                     <Label x:Name="RoundCounterLabel"
-                       Text="{Binding RoundDisplayText}"
-                       Style="{StaticResource RoundCounterLabelStyle}"/>
+                   Text="{Binding RoundDisplayText}"
+                   Style="{StaticResource RoundCounterLabelStyle}"/>
                 </Border>
+                <Button x:Name="AddListItemGroup"
+                        Text="{extension:Translate Key=Add}"
+                        Clicked="AddEnemy_Clicked"
+                        Margin="0,0,0,10"/>
 
                 <CollectionView ItemsSource="{Binding Enemies}">
                     <CollectionView.ItemTemplate>
@@ -41,7 +44,7 @@
                                         <Setter Property="BackgroundColor">
                                             <Setter.Value>
                                                 <AppThemeBinding Light="{StaticResource PlayerBaseLight}"
-                                                               Dark="{StaticResource PlayerBaseDark}"/>
+                                                           Dark="{StaticResource PlayerBaseDark}"/>
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -49,7 +52,7 @@
                                         <Setter Property="BackgroundColor">
                                             <Setter.Value>
                                                 <AppThemeBinding Light="{StaticResource MonsterBaseLight}"
-                                                               Dark="{StaticResource MonsterBaseDark}"/>
+                                                           Dark="{StaticResource MonsterBaseDark}"/>
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -57,7 +60,7 @@
                                         <Setter Property="BackgroundColor">
                                             <Setter.Value>
                                                 <AppThemeBinding Light="{StaticResource NPCBaseLight}"
-                                                               Dark="{StaticResource NPCBaseDark}"/>
+                                                           Dark="{StaticResource NPCBaseDark}"/>
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -77,7 +80,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Label 
                                         Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                                        Text="{Binding Name}" FontSize="22" 
+                                        Text="{Binding Name}" FontSize="25" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         Margin="5"
                                         BindingContext="{Binding}">
@@ -89,10 +92,10 @@
                                         <Image.Source>
                                             <AppThemeBinding Light="shield_dark.png" Dark="shield.png" />
                                         </Image.Source>
-                                    </Image>    
+                                    </Image>
                                     <Label 
                                         Grid.Row="1"  
-                                        Text="{Binding ArmorClass}" FontSize="19" 
+                                        Text="{Binding ArmorClass}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
@@ -102,7 +105,7 @@
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <!--<Image  Grid.Row="0" Grid.Column="4" 
-                                            Source="papyrus"/>-->
+                                        Source="papyrus"/>-->
                                     <Label 
                                         Grid.Row="0" Grid.Column="4"
                                         Text="{Binding CreatureType}" 
@@ -110,7 +113,6 @@
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
-                                        Padding="0,0,0,0"
                                         BindingContext="{Binding}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="CreatureTypeLabel_Clicked" />
@@ -118,13 +120,13 @@
                                     </Label>
                                     <Image MaximumHeightRequest="35"
                                            Grid.Row="0" Grid.Column="0">
-                                           <Image.Source>
-                                                <AppThemeBinding Light="hexagon_dark.png" Dark="hexagon_light.png" />
-                                           </Image.Source>
+                                        <Image.Source>
+                                            <AppThemeBinding Light="hexagon_dark.png" Dark="hexagon_light.png" />
+                                        </Image.Source>
                                     </Image>
                                     <Label 
                                         Grid.Row="0" Grid.Column="0"
-                                        Text="{Binding Initiative}" FontSize="19" 
+                                        Text="{Binding Initiative}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
                                         HorizontalTextAlignment="Center"
@@ -133,14 +135,6 @@
                                             <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Button 
-                                        Grid.Row="1" Grid.Column="1"
-                                        x:Name="IncreaseHP"
-                                        ImageSource="keyboard_double_arrow_up.png"
-                                        Clicked="IncreaseHP_Clicked" BindingContext="{Binding}"
-                                        BackgroundColor="Green"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource EnemyBtn}" />
                                     <Label 
                                         Grid.Row="1" Grid.Column="2"
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
@@ -152,117 +146,40 @@
                                         </Label.GestureRecognizers>
                                         <Label.FormattedText>
                                             <FormattedString>
+                                                <Span Text=" " FontFamily="FluentSystemIcons-Filled" />
                                                 <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="AeroMaticsStencil" />
-                                                <Span Text="   " FontFamily="FluentSystemIcons-Filled" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-                                    <Button 
-                                        Grid.Row="1" Grid.Column="3"
-                                        x:Name="DecreaseHP"
-                                        ImageSource="keyboard_double_arrow_down.png"
-                                        Clicked="DecreaseHP_Clicked" BindingContext="{Binding}"
-                                        HorizontalOptions="End"
-                                        BackgroundColor="Red"
-                                        Style="{StaticResource EnemyBtn}" />
-                                    <Button 
-                                        Grid.Row="1" Grid.Column="4"
-                                        x:Name="RemoveEnemy"
-                                        ImageSource="delete.png"
-                                        BindingContext="{Binding}"
-                                        HorizontalOptions="End"
-                                        BackgroundColor="Red"
-                                        Clicked="RemoveEnemy_Clicked"
-                                        Style="{StaticResource EnemyBtn}" />
+                                    <Button Grid.Row="1" Grid.Column="3"
+                                            x:Name="RemoveEnemy"
+                                            ImageSource="delete.png"
+                                            BindingContext="{Binding}"
+                                            HorizontalOptions="End"
+                                            BackgroundColor="Red"
+                                            Clicked="RemoveEnemy_Clicked"
+                                            Style="{StaticResource EnemyBtn}" />
+                                    <Button Text="➕"
+                                            x:Name="AddSingleEnemy"
+                                            Grid.Row="1" Grid.Column="4"
+                                            BackgroundColor="Transparent"
+                                            FontSize="22"
+                                            BindingContext="{Binding}"
+                                            Clicked="AddSingleEnemyToMainPage_Clicked" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
                 <Button 
                     x:Name="AddListItem"
-                    Text="{extension:Translate Key=Add}"
-                    Clicked="AddEnemyClicked"
+                    Text="{extension:Translate Key=AddToBattle}"
+                    Clicked="AddToMainPage_Clicked"
                     Margin="0,0,0,10"/>
             </VerticalStackLayout>
         </ScrollView>
-
-        <BoxView x:Name="Overlay"
-                 BackgroundColor="#80000000"
-                 IsVisible="False"
-                 Grid.RowSpan="2" />
-        <Frame x:Name="ActionLogDrawer"
-               Grid.RowSpan="2"
-               BackgroundColor="#222"
-               BorderColor="#444"
-               CornerRadius="0"
-               HasShadow="True"
-               IsVisible="False"
-               WidthRequest="300"
-               HorizontalOptions="End"
-               TranslationX="300"
-               Padding="10,20,10,10">
-            <ScrollView >
-                <VerticalStackLayout>
-                    <Label Text="📜 Action Log"
-                           FontAttributes="Bold"
-                           FontSize="20"
-                           TextColor="White"
-                           HorizontalOptions="Center"
-                           Margin="0,0,0,10"/>
-                    <VerticalStackLayout x:Name="ActionLogContainer"
-                                         Spacing="15"
-                                         Padding="0,0,0,20"/>
-                    <Button Text="🧹 Clear"
-                            Clicked="ClearLog_Clicked"
-                            BackgroundColor="#333"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Margin="0,10,0,0"
-                            FontAttributes="Bold"
-                            Padding="10,5"/>
-                </VerticalStackLayout>
-            </ScrollView>
-        </Frame>
-        <Button
-                 x:Name="ActionLogButton"
-                 Text="Log"
-                 Clicked="ActionLogButton_Clicked"
-                 HorizontalOptions="Start"
-                 VerticalOptions="End"
-                 Margin="0,0,0,10"
-                 Style="{StaticResource NavButtonStyle}"/>
-
-        <Grid Grid.Row="1"
-              BackgroundColor="#000000">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0"
-                    Text="{extension:Translate Key=Previous}"
-                    Clicked="PreviousEnemy_Clicked"
-                    Style="{StaticResource NavButtonStyle}"/>
-            <Image  Grid.Column="0"
-                    Source="arrow_back_ios.png"
-                    Margin="10,0"
-                    HorizontalOptions="Start" />
-            <Button Grid.Column="1"
-                    x:Name="StartEndButton"
-                    Text="{Binding StartEndButtonText}"
-                    Clicked="StartEndButton_Clicked"
-                    Style="{StaticResource StartEndButtonStyle}"/>
-            <Button Grid.Column="2"
-                    Text="{extension:Translate Key=Next}"
-                    Clicked="NextEnemy_Clicked"
-                    Style="{StaticResource NavButtonStyle}"/>
-            <Image  Grid.Column="2"
-                    Source="arrow_forward_ios.png"
-                    Margin="10,0"
-                    HorizontalOptions="End" />
-        </Grid>
+        
     </Grid>
+
+    
 </ContentPage>
