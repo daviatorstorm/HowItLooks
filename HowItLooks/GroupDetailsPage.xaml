@@ -25,7 +25,7 @@
                 <CollectionView ItemsSource="{Binding Enemies}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border>
+                            <Border Margin="0,3,0,3">
                                 <Border.Stroke>
                                     <SolidColorBrush Color="Transparent" />
                                 </Border.Stroke>
@@ -172,10 +172,10 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
                 <Button 
-                    x:Name="AddListItem"
-                    Text="{extension:Translate Key=AddToBattle}"
-                    Clicked="AddToMainPage_Clicked"
-                    Margin="0,0,0,10"/>
+                x:Name="AddListItem"
+                Text="Додати до бою"
+                Clicked="AddToMainPage_Clicked"
+                Margin="0,0,0,10"/>
             </VerticalStackLayout>
         </ScrollView>
         
