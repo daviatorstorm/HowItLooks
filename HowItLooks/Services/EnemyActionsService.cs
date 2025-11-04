@@ -9,8 +9,10 @@ namespace HowItLooks.Services
     class EnemyActionsService
     {
         private readonly DatabaseService _db = new();
-        public EnemyActionsService()
+        private readonly ActionLogService? _logService;
+        public EnemyActionsService(ActionLogService? logManager = null)
         {
+            _logService = logManager;
         }
 
         public async Task ChangeInitiative(Page page, Enemy enemy, Action? onSorted = null)
@@ -27,6 +29,8 @@ namespace HowItLooks.Services
                 int previousInitiative = enemy.Initiative;
                 enemy.Initiative = newInitiative;
                 _db.UpdateMonster(new EnemyEntity(enemy));
+                if (_logService != null && _logService.GetIsRoundState() == true)
+                    _logService.LogAction($"{enemy.Name} змінено Initiative з ({previousInitiative}) на ({enemy.Initiative})", enemy.CreatureType.ToString());
 
                 onSorted?.Invoke();
             }
@@ -43,6 +47,8 @@ namespace HowItLooks.Services
             {
                 enemy.IncreaseHitPoints(hp);
                 _db.UpdateMonster(new EnemyEntity(enemy));
+                if (_logService != null && _logService.GetIsRoundState() == true)
+                    _logService.LogAction($"{enemy.Name} збільшено HP на (+{hp})");
             }
         }
 
@@ -63,6 +69,8 @@ namespace HowItLooks.Services
                     int previousHp = enemy.HitPoints;
                     enemy.UpdateHitPoints(hp);
                     _db.UpdateMonster(new EnemyEntity(enemy));
+                    if (_logService != null && _logService.GetIsRoundState() == true)
+                        _logService.LogAction($"{enemy.Name} змінено HP з ({previousHp}) на ({enemy.HitPoints})");
                 }
             }
             else if (action == Translator.Instance["ChangeTempHP"])
@@ -77,6 +85,8 @@ namespace HowItLooks.Services
                     int previousTempHp = enemy.TempHitPoints;
                     enemy.TempHitPoints = tempHp;
                     _db.UpdateMonster(new EnemyEntity(enemy));
+                    if (_logService != null && _logService.GetIsRoundState() == true)
+                        _logService.LogAction($"{enemy.Name} змінено тимчасові HP з ({previousTempHp}) на ({enemy.TempHitPoints})");
                 }
             }
         }
@@ -98,6 +108,37 @@ namespace HowItLooks.Services
                 enemy.DecreaseHitPoints(hp);
                 _db.UpdateMonster(new EnemyEntity(enemy));
 
+                if (_logService != null && _logService.GetIsRoundState() == true)
+                {
+                    string logMessage;
+
+                    if (oldTempHP > 0)
+                    {
+                        int lostTemp = Math.Max(0, oldTempHP - enemy.TempHitPoints);
+                        int lostReal = Math.Max(0, oldHP - enemy.HitPointsLeft);
+
+                        if (lostTemp > 0 && lostReal > 0)
+                        {
+                            logMessage = $"{enemy.Name} отримав −{hp} HP: " +
+                                         $"{lostTemp} тимчасових (TempHP {oldTempHP} → {enemy.TempHitPoints}) і " +
+                                         $"{lostReal} звичайних (HP {oldHP} → {enemy.HitPointsLeft})";
+                        }
+                        else if (lostTemp > 0)
+                        {
+                            logMessage = $"{enemy.Name} отримав −{lostTemp} тимчасових HP (TempHP {oldTempHP} → {enemy.TempHitPoints})";
+                        }
+                        else
+                        {
+                            logMessage = $"{enemy.Name} отримав −{lostReal} HP (HP {oldHP} → {enemy.HitPointsLeft})";
+                        }
+                    }
+                    else
+                    {
+                        logMessage = $"{enemy.Name} отримав −{hp} HP ({oldHP} → {enemy.HitPointsLeft})";
+                    }
+
+                    _logService.LogAction(logMessage, enemy.CreatureType.ToString());
+                }
             }
         }
 
@@ -112,6 +153,8 @@ namespace HowItLooks.Services
 
             if (!string.IsNullOrWhiteSpace(result))
             {
+                if (_logService != null && _logService.GetIsRoundState() == true)
+                    _logService.LogAction($"{enemy.Name} Змінено Імя на ({result})", enemy.CreatureType.ToString());
 
                 enemy.Name = result;
                 _db.UpdateMonster(new EnemyEntity(enemy));
@@ -133,6 +176,8 @@ namespace HowItLooks.Services
                 enemy.ArmorClass = newAC;
                 _db.UpdateMonster(new EnemyEntity(enemy));
 
+                if (_logService != null && _logService.GetIsRoundState() == true)
+                    _logService.LogAction($"{enemy.Name} Змінено АС на ({result})", enemy.CreatureType.ToString());
             }
         }
 
@@ -156,6 +201,9 @@ namespace HowItLooks.Services
             };
 
             _db.UpdateMonster(new EnemyEntity(enemy));
+
+            if (_logService != null && _logService.GetIsRoundState() == true)
+                _logService.LogAction($"{enemy.Name} Змінено CreatureType на ({enemy.CreatureType})", enemy.CreatureType.ToString());
         }
 
         public async Task<bool> RemoveEnemy(Page page,
@@ -176,6 +224,8 @@ namespace HowItLooks.Services
 
             int index = enemies.IndexOf(enemy);
             enemies.Remove(enemy);
+            if (_logService != null && _logService.GetIsRoundState() == true)
+                _logService.LogAction($"{enemy.Name} Deleted", enemy.CreatureType.ToString());
             _db.DeleteMonster(new EnemyEntity(enemy));
 
             if (getActiveEnemy == null || setActiveEnemy == null)
@@ -265,6 +315,9 @@ namespace HowItLooks.Services
 
             var addedEnemy = new Enemy(entity);
             enemies.Add(addedEnemy);
+
+            if (_logService != null && _logService.GetIsRoundState() == true)
+                _logService.LogAction($"Додано -> {name}", entity.CreatureType.ToString());
 
             if (getActiveEnemy == null || setActiveEnemy == null)
                 return;

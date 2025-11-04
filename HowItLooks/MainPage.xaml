@@ -181,6 +181,51 @@
                     Margin="0,0,0,10"/>
             </VerticalStackLayout>
         </ScrollView>
+        <BoxView x:Name="Overlay"
+                 BackgroundColor="#80000000"
+                 IsVisible="False"
+                 Grid.RowSpan="2" />
+        <Frame x:Name="ActionLogDrawer"
+               Grid.RowSpan="2"
+               BackgroundColor="#222"
+               BorderColor="#444"
+               CornerRadius="0"
+               HasShadow="True"
+               IsVisible="False"
+               WidthRequest="300"
+               HorizontalOptions="End"
+               TranslationX="300"
+               Padding="10,20,10,10">
+            <ScrollView >
+                <VerticalStackLayout>
+                    <Label Text="📜 Action Log"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,10"/>
+                    <VerticalStackLayout x:Name="ActionLogContainer"
+                                         Spacing="15"
+                                         Padding="0,0,0,20"/>
+                    <Button Text="🧹 Clear"
+                            Clicked="ClearLog_Clicked"
+                            BackgroundColor="#333"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Margin="0,10,0,0"
+                            FontAttributes="Bold"
+                            Padding="10,5"/>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+        <Button  x:Name="ActionLogButton"
+                 Text="Log"
+                 Clicked="ActionLogButton_Clicked"
+                 HorizontalOptions="Start"
+                 VerticalOptions="End"
+                 Margin="0,0,0,10"
+                 Style="{StaticResource NavButtonStyle}"/>
+        
         <Grid Grid.Row="1"
           BackgroundColor="#000000">
             <Grid.ColumnDefinitions>
