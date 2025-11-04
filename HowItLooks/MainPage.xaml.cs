@@ -49,7 +49,9 @@ namespace HowItLooks
             InitializeComponent();
             _db = new DatabaseService();
             DeviceDisplay.KeepScreenOn = true;
-            var monsters = _db.GetAllMonsters().Select(x => new Enemy(x));
+            var monsters = _db.GetAllMonsters()
+                                .Where(x => x.GroupId == null)
+                                .Select(x => new Enemy(x));
             Enemies = new ObservableCollection<Enemy>(monsters);
             SortEnemies();
             _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive);
@@ -370,6 +372,46 @@ namespace HowItLooks
             };
 
             _db.UpdateMonster(new EnemyEntity(enemy));
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            System.Diagnostics.Debug.WriteLine("🔵 OnAppearing called - GroupDetailsPage");
+
+            MessagingCenter.Subscribe<GroupDetailsPage>(this, "EnemiesUpdated", (sender) =>
+            {
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+            MessagingCenter.Subscribe<Groups>(this, "EnemiesUpdated", (sender) =>
+            {
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+        }
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    //_logger.LogInformation("OnAppearing called");
+        //    System.Diagnostics.Debug.WriteLine("🔵 OnDisappearing called - GroupDetailsPage");
+        // 
+        //    MessagingCenter.Unsubscribe<GroupDetailsPage>(this, "EnemiesUpdated");
+        //}
+
+        private void RefreshEnemiesFromDatabase()
+        {
+            var allEnemies = _db.GetAllMonsters().Where(e => e.GroupId == null);
+
+            var existingIds = Enemies.Select(e => e.Id).ToHashSet();
+
+            foreach (var entity in allEnemies)
+            {
+                if (!existingIds.Contains(entity.Id) && entity.GroupId == null)
+                {
+                    Enemies.Add(new Enemy(entity));
+                }
+            }
         }
     }
 }

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
+             xmlns:extension="clr-namespace:HowItLooks.Extension"
+             x:Class="HowItLooks.GroupDetailsPage"
+             Title="{extension:Translate Key=Groups}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Padding="10,0"
+                Spacing="25">
+                <Border x:Name="RoundCounterBorder"
+                Style="{StaticResource RoundCounterBorderStyle}"
+                IsVisible="False">
+                    <Label x:Name="RoundCounterLabel"
+                   Text="{Binding RoundDisplayText}"
+                   Style="{StaticResource RoundCounterLabelStyle}"/>
+                </Border>
+                <Button x:Name="AddListItemGroup"
+                        Text="{extension:Translate Key=Add}"
+                        Clicked="AddEnemy_Clicked"
+                        Margin="0,0,0,10"/>
+
+                <CollectionView ItemsSource="{Binding Enemies}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="Transparent" />
+                                </Border.Stroke>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                        <Setter Property="Stroke" Value="MediumPurple" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                        <Setter Property="Padding" Value="0" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                        <Setter Property="StrokeThickness" Value="0" />
+                                        <Setter Property="Padding" Value="2" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="Player">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource PlayerBaseLight}"
+                                                           Dark="{StaticResource PlayerBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="Monster">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource MonsterBaseLight}"
+                                                           Dark="{StaticResource MonsterBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding CreatureType}" Value="NPC">
+                                        <Setter Property="BackgroundColor">
+                                            <Setter.Value>
+                                                <AppThemeBinding Light="{StaticResource NPCBaseLight}"
+                                                           Dark="{StaticResource NPCBaseDark}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                        Text="{Binding Name}" FontSize="25" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        Margin="5"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Image Grid.Row="1" >
+                                        <Image.Source>
+                                            <AppThemeBinding Light="shield_dark.png" Dark="shield.png" />
+                                        </Image.Source>
+                                    </Image>
+                                    <Label 
+                                        Grid.Row="1"  
+                                        Text="{Binding ArmorClass}" FontSize="20" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <!--<Image  Grid.Row="0" Grid.Column="4" 
+                                        Source="papyrus"/>-->
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="4"
+                                        Text="{Binding CreatureType}" 
+                                        FontSize="17" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="CreatureTypeLabel_Clicked" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Image MaximumHeightRequest="35"
+                                           Grid.Row="0" Grid.Column="0">
+                                        <Image.Source>
+                                            <AppThemeBinding Light="hexagon_dark.png" Dark="hexagon_light.png" />
+                                        </Image.Source>
+                                    </Image>
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="0"
+                                        Text="{Binding Initiative}" FontSize="20" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label 
+                                        Grid.Row="1" Grid.Column="2"
+                                        TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        BindingContext="{Binding}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="HPLabel_Clicked"/>
+                                        </Label.GestureRecognizers>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text=" " FontFamily="FluentSystemIcons-Filled" />
+                                                <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="AeroMaticsStencil" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Button Grid.Row="1" Grid.Column="3"
+                                            x:Name="RemoveEnemy"
+                                            ImageSource="delete.png"
+                                            BindingContext="{Binding}"
+                                            HorizontalOptions="End"
+                                            BackgroundColor="Red"
+                                            Clicked="RemoveEnemy_Clicked"
+                                            Style="{StaticResource EnemyBtn}" />
+                                    <Button Text="➕"
+                                            x:Name="AddSingleEnemy"
+                                            Grid.Row="1" Grid.Column="4"
+                                            BackgroundColor="Transparent"
+                                            FontSize="22"
+                                            BindingContext="{Binding}"
+                                            Clicked="AddSingleEnemyToMainPage_Clicked" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button 
+                x:Name="AddListItem"
+                Text="Додати до бою"
+                Clicked="AddToMainPage_Clicked"
+                Margin="0,0,0,10"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
+
+</ContentPage>

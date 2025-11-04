@@ -61,6 +61,11 @@ namespace HowItLooks
             await GoToAsync("//Globals");
             Shell.Current.FlyoutIsPresented = false;
         }
+        private async void OnGroupsTapped(object sender, EventArgs e)
+        {
+            await GoToAsync("//Groups");
+            Shell.Current.FlyoutIsPresented = false;
+        }
         private void OnLanguagePickerChanged(object sender, EventArgs e)
         {
             var selectedLanguage = LanguagePicker.SelectedItem as string;

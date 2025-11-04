@@ -11,6 +11,7 @@
 
     <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
     <ShellContent Route="Globals" ContentTemplate="{DataTemplate local:Globals}" />
+    <ShellContent Route="Groups" ContentTemplate="{DataTemplate local:Groups}" />
 
     <Shell.FlyoutHeader>
         <VerticalStackLayout Padding="10" Spacing="20">
@@ -44,6 +45,21 @@
                        Source="earth.png"
                        Style="{StaticResource FlyoutMenuIconStyle}"/>
                 <Label Text="{extension:Translate Key=Global}"
+                       Grid.Column="1"
+                       Style="{StaticResource FlyoutMenuLabelStyle}" />
+            </Grid>
+            <Grid Padding="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGroupsTapped" />
+                </Grid.GestureRecognizers>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="GroupsIcon"
+                       Source="groups_light.png"
+                       Style="{StaticResource FlyoutMenuIconStyle}"/>
+                <Label Text="{extension:Translate Key=Groups}"
                        Grid.Column="1"
                        Style="{StaticResource FlyoutMenuLabelStyle}" />
             </Grid>
