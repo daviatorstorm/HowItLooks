@@ -79,11 +79,65 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Додати всіх ворогів на головну сторінку.
+        /// </summary>
+        public static string AddAllEnemiesToMainPage {
+            get {
+                return ResourceManager.GetString("AddAllEnemiesToMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Додати монстра.
         /// </summary>
         public static string AddAMonster {
             get {
                 return ResourceManager.GetString("AddAMonster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to додано на головну сторінку!.
+        /// </summary>
+        public static string AddedInMainPage {
+            get {
+                return ResourceManager.GetString("AddedInMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to додано на головну сторінку.
+        /// </summary>
+        public static string AddedToMainPage {
+            get {
+                return ResourceManager.GetString("AddedToMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Додати до бою.
+        /// </summary>
+        public static string AddToBattle {
+            get {
+                return ResourceManager.GetString("AddToBattle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Група з такою назвою вже існує.
+        /// </summary>
+        public static string AGroupWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("AGroupWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to і всі вороги в ньому?.
+        /// </summary>
+        public static string AndAllEnemiesInIt {
+            get {
+                return ResourceManager.GetString("AndAllEnemiesInIt", resourceCulture);
             }
         }
         
@@ -187,11 +241,47 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to видалено.
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Готово.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Кінець.
         /// </summary>
         public static string End {
             get {
                 return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вороги з.
+        /// </summary>
+        public static string EnemiesFrom {
+            get {
+                return ResourceManager.GetString("EnemiesFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введіть назву групи:.
+        /// </summary>
+        public static string EnterAGroupName {
+            get {
+                return ResourceManager.GetString("EnterAGroupName", resourceCulture);
             }
         }
         
@@ -214,11 +304,65 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Помилка.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Глобальні.
         /// </summary>
         public static string Global {
             get {
                 return ResourceManager.GetString("Global", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Група.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Група не має ворогів.
+        /// </summary>
+        public static string GroupHasNoEnemies {
+            get {
+                return ResourceManager.GetString("GroupHasNoEnemies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва групи.
+        /// </summary>
+        public static string GroupName {
+            get {
+                return ResourceManager.GetString("GroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Групи.
+        /// </summary>
+        public static string Groups {
+            get {
+                return ResourceManager.GetString("Groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Скільки HP.
+        /// </summary>
+        public static string HowMuchHp {
+            get {
+                return ResourceManager.GetString("HowMuchHp", resourceCulture);
             }
         }
         
@@ -259,6 +403,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HP.
+        /// </summary>
+        public static string HP {
+            get {
+                return ResourceManager.GetString("HP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Збільшити НР.
         /// </summary>
         public static string IncreaseTheHP {
@@ -268,11 +421,29 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Інформація.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Основна.
         /// </summary>
         public static string Main {
             get {
                 return ResourceManager.GetString("Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Групи монстрів.
+        /// </summary>
+        public static string MonsterGroups {
+            get {
+                return ResourceManager.GetString("MonsterGroups", resourceCulture);
             }
         }
         
@@ -300,6 +471,24 @@ namespace HowItLooks.Resources.Languages {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ні.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Варіанти для.
+        /// </summary>
+        public static string OptionsFor {
+            get {
+                return ResourceManager.GetString("OptionsFor", resourceCulture);
             }
         }
         
@@ -358,6 +547,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Пошук....
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Почати.
         /// </summary>
         public static string Start {
@@ -367,11 +565,47 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Успіх.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to У цієї групи немає ворогів.
+        /// </summary>
+        public static string ThisGroupHasNoEnemies {
+            get {
+                return ResourceManager.GetString("ThisGroupHasNoEnemies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to на головну сторінку.
+        /// </summary>
+        public static string ToTheMainPage {
+            get {
+                return ResourceManager.GetString("ToTheMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to На яке ім&apos;я ви його зміните?.
         /// </summary>
         public static string WhatNameWillYouChange {
             get {
                 return ResourceManager.GetString("WhatNameWillYouChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Так.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }
