@@ -11,9 +11,12 @@ namespace HowItLooks
         public ObservableCollection<Enemy> Enemies { get; set; }
         private Enemy? _activeEnemy;
         private readonly DatabaseService _db;
+        private readonly EnemyActionsService _enemyActions;
+        private ActionLogService _logService;
 
         private bool _isRoundStarted = false;
         private int _roundCounter = 1;
+        private DateTime _battleStartTime;
 
         public int RoundCounter
         {
@@ -49,11 +52,15 @@ namespace HowItLooks
             InitializeComponent();
             _db = new DatabaseService();
             DeviceDisplay.KeepScreenOn = true;
-            var monsters = _db.GetAllMonsters().Select(x => new Enemy(x));
+            var monsters = _db.GetAllMonsters()
+                                .Where(x => x.GroupId == null)
+                                .Select(x => new Enemy(x));
             Enemies = new ObservableCollection<Enemy>(monsters);
             SortEnemies();
             _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive);
             //BindingContext = new EnemiesViewModel();
+            _logService = new ActionLogService(ActionLogDrawer, Overlay, ActionLogContainer);
+            _enemyActions = new EnemyActionsService(_logService);
 
             BindingContext = this;
             Translator.Instance.PropertyChanged += (s, e) =>
@@ -65,72 +72,30 @@ namespace HowItLooks
 
         private async void AddEnemyClicked(object sender, EventArgs e)
         {
-            var typeMap = new Dictionary<string, CreatureType>
-            {
-                { "Player", CreatureType.Player },
-                { "Monster", CreatureType.Monster },
-                { "NPC", CreatureType.NPC }
-            };
-            
-            string selected = await DisplayActionSheet(Translator.Instance["ChooseCreatureType"],
-                                                       Translator.Instance["Cancel"],
-                                                       null,
-                                                       typeMap.Keys.ToArray());
-
-            if (string.IsNullOrWhiteSpace(selected) || selected == Translator.Instance["Cancel"] || !typeMap.ContainsKey(selected))
-                return;
-
-            CreatureType selectedType = typeMap[selected];
-
-            var newMonsterName = await DisplayPromptAsync(Translator.Instance["AddACreature"],
-                                                          Translator.Instance["NameTheCreature"],
-                                                          Translator.Instance["Save"],
-                                                          Translator.Instance["Cancel"]);
-
-            if (string.IsNullOrWhiteSpace(newMonsterName)) return;
-
-            var entity = _db.AddMonster(newMonsterName);
-            entity.CreatureType = selectedType;
-            _db.UpdateMonster(entity);
-            var newEnemy = new Enemy(entity);
-            Enemies.Add(newEnemy);
-
-            if (Enemies.Count == 1)
-                SetActiveEnemy(newEnemy);
+            await _enemyActions.AddEnemy(
+                  page: this,
+                  enemies: Enemies,
+                  getActiveEnemy: () => _activeEnemy,
+                  setActiveEnemy: SetActiveEnemy
+           );
         }
 
         private async void IncreaseHP_Clicked(object sender, EventArgs e)
         {
             var button = sender as Button;
-            string result = await DisplayPromptAsync(Translator.Instance["IncreaseTheHP"],
-                                                     Translator.Instance["HowMuchToIncreaseTheHP"],
-                                                     keyboard: Keyboard.Numeric);
-            if (!int.TryParse(result, out int hp)) return;
-
             var enemy = button?.BindingContext as Enemy;
-            if (enemy != null)
-            {
-                enemy.IncreaseHitPoints(hp);
-                _db.UpdateMonster(new EnemyEntity(enemy));
-            }
+            if (enemy == null) return;
+
+            await _enemyActions.IncreaseHP(this, enemy);
         }
 
         private async void DecreaseHP_Clicked(object sender, EventArgs e)
         {
             var button = sender as Button;
-            string result = await DisplayPromptAsync(Translator.Instance["ReduceHP"],
-                                                     Translator.Instance["HowMuchToReduceTheHP"],
-                                                     "OK",
-                                                     Translator.Instance["Cancel"],
-                                                     keyboard: Keyboard.Numeric);
-            if (!int.TryParse(result, out int hp)) return;
-
             var enemy = button?.BindingContext as Enemy;
-            if (enemy != null)
-            {
-                enemy?.DecreaseHitPoints(hp);
-                _db.UpdateMonster(new EnemyEntity(enemy));
-            }
+
+            if (enemy == null) return;
+            await _enemyActions.DecreaseHP(this, enemy);
         }
 
         private async void HPLabel_Clicked(object sender, EventArgs e)
@@ -139,35 +104,7 @@ namespace HowItLooks
             var enemy = button?.BindingContext as Enemy;
             if (enemy == null) return;
 
-            string action = await DisplayActionSheet(Translator.Instance["ChangeHP"], Translator.Instance["Cancel"], null,
-                                             Translator.Instance["ChangeRegularHP"], Translator.Instance["ChangeTempHP"]);
-
-            if (action == Translator.Instance["ChangeRegularHP"])
-            {
-                string result = await DisplayPromptAsync(Translator.Instance["ChangeHP"],
-                                                         Translator.Instance["HowMuchToChangeHP"],
-                                                         "OK", Translator.Instance["Cancel"],
-                                                         keyboard: Keyboard.Numeric);
-
-                if (int.TryParse(result, out int hp))
-                {
-                    enemy.UpdateHitPoints(hp);
-                    _db.UpdateMonster(new EnemyEntity(enemy));
-                }
-            }
-            else if (action == Translator.Instance["ChangeTempHP"])
-            {
-                string result = await DisplayPromptAsync(Translator.Instance["ChangeTempHP"],
-                                                         Translator.Instance["HowMuchToChangeTempHP"],
-                                                         "OK", Translator.Instance["Cancel"],
-                                                         keyboard: Keyboard.Numeric);
-
-                if (int.TryParse(result, out int tempHp))
-                {
-                    enemy.TempHitPoints = tempHp;
-                    _db.UpdateMonster(new EnemyEntity(enemy));
-                }
-            }
+            await _enemyActions.ChangeHP(this, enemy);
         }
 
         private async void NameLabel_Clicked(object sender, TappedEventArgs e)
@@ -175,42 +112,21 @@ namespace HowItLooks
             var button = sender as Label;
             var enemy = button?.BindingContext as Enemy;
             if (enemy == null) return;
-            string result = await DisplayPromptAsync(Translator.Instance["ChangeName"],
-                                                     Translator.Instance["WhatNameWillYouChange"],
-                                                     "OK",
-                                                     Translator.Instance["Cancel"],
-                                                     initialValue: enemy.Name);
-            if (result != null)
-            { 
-                enemy.Name = result;
-                _db.UpdateMonster(new EnemyEntity(enemy));
-            }
+
+            await _enemyActions.ChangeName(this, enemy);
         }
 
         private async void RemoveEnemy_Clicked(object sender, EventArgs e)
         {
             var button = sender as Button;
             var enemy = button?.BindingContext as Enemy;
-            var result = await DisplayAlert(Translator.Instance["Removal"],
-                                            Translator.Instance["RemoveTheMonster"],
-                                            Translator.Instance["Delete"],
-                                            Translator.Instance["Cancel"]);
-            if (result && enemy != null)
-            {
-                int index = Enemies.IndexOf(enemy);
-                Enemies.Remove(enemy);
-                _db.DeleteMonster(new EnemyEntity(enemy));
+            if (enemy == null) return;
 
-                if (Enemies.Count == 0)
-                    SetActiveEnemy(null);
-                else if (_activeEnemy == enemy)
-                {
-                    int nextIndex = Math.Min(index, Enemies.Count - 1);
-                    Enemy localEnemy = Enemies[nextIndex];
-                    SetActiveEnemy(localEnemy);
-                    _db.UpdateMonster(new EnemyEntity(enemy));
-                }
-            }
+            await _enemyActions.RemoveEnemy(page: this,
+                                            enemy: enemy,
+                                            enemies: Enemies,
+                                            getActiveEnemy: () => _activeEnemy,
+                                            setActiveEnemy: SetActiveEnemy);
         }
 
         private async void InitiativeLabel_Clicked(object sender, EventArgs e)
@@ -219,17 +135,7 @@ namespace HowItLooks
             var enemy = label?.BindingContext as Enemy;
             if (enemy == null) return;
 
-            string result = await DisplayPromptAsync(Translator.Instance["ChangeOfInitiative"],
-                                                     Translator.Instance["EnterNewInitiative"],
-                                                     "OK",
-                                                     Translator.Instance["Cancel"],
-                                                     keyboard: Keyboard.Numeric);
-            if (int.TryParse(result, out int newInitiative))
-            {
-                enemy.Initiative = newInitiative;
-                _db.UpdateMonster(new EnemyEntity(enemy));
-                SortEnemies();
-            }
+            await _enemyActions.ChangeInitiative(this, enemy, SortEnemies);
         }
 
         private void SortEnemies()
@@ -292,9 +198,14 @@ namespace HowItLooks
             if (_isRoundStarted && index == sorted.Count - 1 && nextIndex == 0)
             {
                 RoundCounter++;
+                _logService.LogAction($"🔁 Початок нового раунду #{RoundCounter}");
                 OnPropertyChanged(nameof(StartEndButtonText));
             }
             SetActiveEnemy(sorted[nextIndex]);
+
+            if (_isRoundStarted)
+                _logService.LogAction($"Хід: {_activeEnemy.Name}", _activeEnemy.CreatureType.ToString());
+            //RenderActionLog();
         }
 
         private void StartRound_Clicked(object sender, EventArgs e)
@@ -312,14 +223,24 @@ namespace HowItLooks
                 RoundCounter = 1;
                 RoundCounterBorder.IsVisible = true;
 
+                _logService.SetRoundState(true);
+                _battleStartTime = DateTime.Now;
+                _logService.LogAction($"🔁 Початок нового раунду #{RoundCounter}");
+
                 var sorted = Enemies.OrderByDescending(e => e.Initiative).ToList();
                 if (sorted.Count > 0)
                     SetActiveEnemy(sorted[0]);
+
+                _logService.LogAction($"Хід: {_activeEnemy?.Name}", _activeEnemy.CreatureType.ToString());
             }
             else
             {
                 _isRoundStarted = false;
                 RoundCounterBorder.IsVisible = false;
+
+                _logService.LogAction("🔴 Бій завершено!");
+                _logService.SetRoundState(false);
+                ShowBattleSummary();
             }
             OnPropertyChanged(nameof(StartEndButtonText));
         }
@@ -328,20 +249,9 @@ namespace HowItLooks
         {
             var label = sender as Label;
             var enemy = label?.BindingContext as Enemy;
-            
-            string result = await DisplayPromptAsync(Translator.Instance["ArmorClass"],
-                                                     Translator.Instance["EnterNewAC"],
-                                                     "OK",
-                                                     Translator.Instance["Cancel"],
-                                                     maxLength: 2,
-                                                     keyboard: Keyboard.Numeric);
-            if (!int.TryParse(result, out int newAC)) return;
+            if (enemy == null) return;
 
-            if (enemy != null)
-            {
-                enemy.ArmorClass = newAC;
-                _db.UpdateMonster(new EnemyEntity(enemy));
-            }
+            await _enemyActions.ChangeArmor(this, enemy);
 
         }
 
@@ -351,25 +261,62 @@ namespace HowItLooks
             var enemy = label?.BindingContext as Enemy;
             if (enemy == null) return;
 
-            string selected = await DisplayActionSheet(Translator.Instance["ChangeCreatureType"],
-                                                       Translator.Instance["Cancel"],
-                                                       null,
-                                                       "Player",
-                                                       "Monster",
-                                                       "NPC");
+            await _enemyActions.ChangeCreatureType(this, enemy);
+        }
 
-            if (selected == null || selected == Translator.Instance["Cancel"])
-                return;
+        private async void ActionLogButton_Clicked(object sender, EventArgs e)
+        {
+            await _logService.ToggleAsync();
+        }
+        private void ClearLog_Clicked(object sender, EventArgs e)
+        {
+            _logService.ClearLog();
+        }
 
-            enemy.CreatureType = selected switch
+        private async void ShowBattleSummary()
+        {
+            if (_logService != null)
+                await _logService.ShowBattleSummary(this, RoundCounter, _battleStartTime);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            System.Diagnostics.Debug.WriteLine("🔵 OnAppearing called - GroupDetailsPage");
+
+            MessagingCenter.Subscribe<GroupDetailsPage>(this, "EnemiesUpdated", (sender) =>
             {
-                "Player" => CreatureType.Player,
-                "Monster" => CreatureType.Monster,
-                "NPC" => CreatureType.NPC,
-                _ => enemy.CreatureType
-            };
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+            MessagingCenter.Subscribe<Groups>(this, "EnemiesUpdated", (sender) =>
+            {
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+        }
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    //_logger.LogInformation("OnAppearing called");
+        //    System.Diagnostics.Debug.WriteLine("🔵 OnDisappearing called - GroupDetailsPage");
+        // 
+        //    MessagingCenter.Unsubscribe<GroupDetailsPage>(this, "EnemiesUpdated");
+        //}
 
-            _db.UpdateMonster(new EnemyEntity(enemy));
+        private void RefreshEnemiesFromDatabase()
+        {
+            var allEnemies = _db.GetAllMonsters().Where(e => e.GroupId == null);
+
+            var existingIds = Enemies.Select(e => e.Id).ToHashSet();
+
+            foreach (var entity in allEnemies)
+            {
+                if (!existingIds.Contains(entity.Id) && entity.GroupId == null)
+                {
+                    Enemies.Add(new Enemy(entity));
+                }
+            }
         }
     }
 }

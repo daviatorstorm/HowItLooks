@@ -13,6 +13,7 @@ public class Enemy : INotifyPropertyChanged
     private bool _isActive;
     private int _armorClass;
     private int _tempHitPoints;
+    private int? _groupId;
     private CreatureType _creatureType;
 
     public int Id { get; set; }
@@ -89,6 +90,18 @@ public class Enemy : INotifyPropertyChanged
             }
         }
     }
+    public int? GroupId
+    {
+        get => _groupId;
+        set
+        {
+            if (_groupId != value)
+            {
+                _groupId = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public bool IsActive
     {
@@ -128,6 +141,7 @@ public class Enemy : INotifyPropertyChanged
         ArmorClass = entity.ArmorClass;
         TempHitPoints = entity.TempHitPoints;
         CreatureType = entity.CreatureType;
+        GroupId = entity.GroupId;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
