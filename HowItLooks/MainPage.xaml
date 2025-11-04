@@ -21,7 +21,7 @@
                 <CollectionView ItemsSource="{Binding Enemies}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border>
+                            <Border Margin="0,3,0,3">
                                 <Border.Stroke>
                                     <SolidColorBrush Color="Transparent" />
                                 </Border.Stroke>
@@ -74,6 +74,12 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
+                                    <Image MaximumHeightRequest="35"
+                                           Grid.Row="0" Grid.Column="0">
+                                        <Image.Source>
+                                            <AppThemeBinding Light="hexagon_dark.png" Dark="hexagon_light.png" />
+                                        </Image.Source>
+                                    </Image>
                                     <Label 
                                         Grid.Row="0" Grid.Column="0"
                                         Text="{Binding Initiative}" FontSize="20" 
@@ -95,10 +101,6 @@
                                             <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-
-                                    <Image  
-                                        Grid.Row="0" Grid.Column="4" 
-                                            Source="papyrus" />
                                     <Label 
                                         Grid.Row="0" Grid.Column="4"
                                         Text="{Binding CreatureType}" 
@@ -147,7 +149,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text=" " FontFamily="FluentSystemIcons-Filled" />
-                                                <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="BravoSCT" />
+                                                <Span Text="{Binding HitPointsLabel, Mode=TwoWay}" FontSize="20" FontFamily="AeroMaticsStencil" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>

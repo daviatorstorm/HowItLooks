@@ -222,4 +222,82 @@
   <data name="NameTheCreature" xml:space="preserve">
     <value>Name the creature:</value>
   </data>
+  <data name="OptionsFor" xml:space="preserve">
+    <value>Options for</value>
+  </data>
+  <data name="AddAllEnemiesToMainPage" xml:space="preserve">
+    <value>Add all enemies to MainPage</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Group name</value>
+  </data>
+  <data name="EnterAGroupName" xml:space="preserve">
+    <value>Enter a group name:</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="AGroupWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A group with this name already exists</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="AndAllEnemiesInIt" xml:space="preserve">
+    <value>and all enemies in it?</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>deleted</value>
+  </data>
+  <data name="EnemiesFrom" xml:space="preserve">
+    <value>Enemies from</value>
+  </data>
+  <data name="AddedToMainPage" xml:space="preserve">
+    <value>added to MainPage</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="GroupHasNoEnemies" xml:space="preserve">
+    <value>Group Has No Enemies</value>
+  </data>
+  <data name="HowMuchHp" xml:space="preserve">
+    <value>How Much HP</value>
+  </data>
+  <data name="HP" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="MonsterGroups" xml:space="preserve">
+    <value>Monster groups</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="AddToBattle" xml:space="preserve">
+    <value>Add to battle</value>
+  </data>
+  <data name="ThisGroupHasNoEnemies" xml:space="preserve">
+    <value>This group has no enemies</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="AddedInMainPage" xml:space="preserve">
+    <value>added in main page!</value>
+  </data>
+  <data name="ToTheMainPage" xml:space="preserve">
+    <value>to the main page</value>
+  </data>
 </root>

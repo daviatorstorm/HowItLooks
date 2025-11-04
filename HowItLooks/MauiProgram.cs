@@ -16,6 +16,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Aero_Matics_Stencil_Regular.ttf", "AeroMaticsStencil");
                 fonts.AddFont("Bravo_Stencil.otf", "BravoSCT");
                 fonts.AddFont("FluentSystemIcons-Filled.ttf", "FluentSystemIcons-Filled");
             });
