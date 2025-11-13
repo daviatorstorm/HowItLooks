@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
              xmlns:extension="clr-namespace:HowItLooks.Extension"
+             xmlns:viewmodels="clr-namespace:HowItLooks.ViewModels"
              x:Class="HowItLooks.GroupDetailsPage"
              Title="{extension:Translate Key=Groups}">
     <Grid RowDefinitions="*,Auto">
@@ -19,7 +20,7 @@
                 </Border>
                 <Button x:Name="AddListItemGroup"
                         Text="{extension:Translate Key=Add}"
-                        Clicked="AddEnemy_Clicked"
+                        Command="{Binding AddEnemyCommand}"
                         Margin="0,0,0,10"/>
 
                 <CollectionView ItemsSource="{Binding Enemies}">
@@ -83,9 +84,10 @@
                                         Text="{Binding Name}" FontSize="25" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         Margin="5"
-                                        BindingContext="{Binding}">
+                                        >
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="NameLabel_Clicked"/>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=ChangeNameCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Image Grid.Row="1" >
@@ -98,24 +100,24 @@
                                         Text="{Binding ArmorClass}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
-                                        HorizontalTextAlignment="Center"
-                                        BindingContext="{Binding}">
+                                        HorizontalTextAlignment="Center">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ArmorClassLabel_Clicked"/>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=ChangeArmorCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <!--<Image  Grid.Row="0" Grid.Column="4" 
-                                        Source="papyrus"/>-->
+                                    <Image  Grid.Row="0" Grid.Column="4" 
+                                        Source="papyrus"/>
                                     <Label 
                                         Grid.Row="0" Grid.Column="4"
                                         Text="{Binding CreatureType}" 
                                         FontSize="17" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
-                                        HorizontalTextAlignment="Center"
-                                        BindingContext="{Binding}">
+                                        HorizontalTextAlignment="Center">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="CreatureTypeLabel_Clicked" />
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=ChangeCreatureTypeCommand}"
+                                                                    CommandParameter="{Binding}" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Image MaximumHeightRequest="35"
@@ -129,20 +131,21 @@
                                         Text="{Binding Initiative}" FontSize="20" 
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
-                                        HorizontalTextAlignment="Center"
-                                        BindingContext="{Binding}">
+                                        HorizontalTextAlignment="Center">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="InitiativeLabel_Clicked"/>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=ChangeInitiativeCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <Label 
                                         Grid.Row="1" Grid.Column="2"
+                                        x:Name="ChangeHP"
                                         TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
                                         VerticalTextAlignment="Center"
-                                        HorizontalTextAlignment="Center"
-                                        BindingContext="{Binding}">
+                                        HorizontalTextAlignment="Center">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="HPLabel_Clicked"/>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=ChangeHPCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </Label.GestureRecognizers>
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -152,20 +155,20 @@
                                         </Label.FormattedText>
                                     </Label>
                                     <Button Grid.Row="1" Grid.Column="3"
-                                            x:Name="RemoveEnemy"
-                                            ImageSource="delete.png"
-                                            BindingContext="{Binding}"
+                                           
+                                            ImageSource="delete.png"       
                                             HorizontalOptions="End"
                                             BackgroundColor="Red"
-                                            Clicked="RemoveEnemy_Clicked"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=RemoveEnemyCommand}"
+                                            CommandParameter="{Binding}"
                                             Style="{StaticResource EnemyBtn}" />
                                     <Button Text="➕"
                                             x:Name="AddSingleEnemy"
                                             Grid.Row="1" Grid.Column="4"
                                             BackgroundColor="Transparent"
                                             FontSize="22"
-                                            BindingContext="{Binding}"
-                                            Clicked="AddSingleEnemyToMainPage_Clicked" />
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupDetailsViewModel}}, Path=AddSingleEnemyToMainPageCommand}"
+                                            CommandParameter="{Binding}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -174,7 +177,7 @@
                 <Button 
                 x:Name="AddListItem"
                 Text="Додати до бою"
-                Clicked="AddToMainPage_Clicked"
+                Command="{Binding AddGroupToMainPageCommand}"
                 Margin="0,0,0,10"/>
             </VerticalStackLayout>
         </ScrollView>

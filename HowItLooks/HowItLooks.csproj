@@ -60,6 +60,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.3" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
@@ -96,10 +97,6 @@
 	  <MauiXaml Update="Groups.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 
 	<ItemGroup>

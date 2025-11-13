@@ -4,12 +4,14 @@
              x:Class="HowItLooks.Groups"
              xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
              xmlns:extension="clr-namespace:HowItLooks.Extension"
+             xmlns:viewmodels="clr-namespace:HowItLooks.ViewModels"
              Title="{extension:Translate Key=Groups}">
     <VerticalStackLayout Padding="10">
 
         <SearchBar x:Name="SearchBarGroups"
                    Placeholder="{extension:Translate Key=Search}"
-                   TextChanged="SearchBarGroups_TextChanged"
+                   Text="{Binding SearchText, Mode=TwoWay}"
+                   SearchCommand="{Binding SearchCommand}"
                    FontSize="18"
                    Margin="0,0,0,10"/>
         <Grid ColumnDefinitions="*, Auto" Padding="5">
@@ -19,7 +21,7 @@
                    VerticalOptions="Center" />
             <Button Text="➕"
                     FontSize="22"
-                    Clicked="AddGroup_Clicked"
+                    Command="{Binding AddGroupCommand}"
                     BackgroundColor="Transparent"
                     TextColor="Black"
                     Grid.Column="1" />
@@ -55,11 +57,11 @@
                                     FontSize="22"
                                     Grid.Column="2"
                                     BackgroundColor="Transparent"
-                                    Clicked="ShowGroupOptions_Clicked"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupsViewModel}}, Path=ShowGroupOptionsCommand}"
                                     CommandParameter="{Binding .}" />
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer
-                                    Tapped="OpenGroup_Clicked"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GroupsViewModel}}, Path=OpenGroupCommand}"
                                     CommandParameter="{Binding .}" />
                             </Grid.GestureRecognizers>
 

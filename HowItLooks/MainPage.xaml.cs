@@ -1,6 +1,7 @@
 ﻿using HowItLooks.Entities;
 using HowItLooks.Models;
 using HowItLooks.Services;
+using HowItLooks.ViewModels;
 using System.Collections.ObjectModel;
 using HowItLooks.Extension;
 
@@ -379,12 +380,12 @@ namespace HowItLooks
             base.OnAppearing();
             System.Diagnostics.Debug.WriteLine("🔵 OnAppearing called - GroupDetailsPage");
 
-            MessagingCenter.Subscribe<GroupDetailsPage>(this, "EnemiesUpdated", (sender) =>
+            MessagingCenter.Subscribe<GroupDetailsViewModel>(this, "EnemiesUpdated", (sender) =>
             {
                 RefreshEnemiesFromDatabase();
                 SortEnemies();
             });
-            MessagingCenter.Subscribe<Groups>(this, "EnemiesUpdated", (sender) =>
+            MessagingCenter.Subscribe<GroupsViewModel>(this, "EnemiesUpdated", (sender) =>
             {
                 RefreshEnemiesFromDatabase();
                 SortEnemies();
