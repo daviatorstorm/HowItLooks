@@ -222,4 +222,10 @@
   <data name="NameTheCreature" xml:space="preserve">
     <value>Name the creature:</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="GroupNotFound" xml:space="preserve">
+    <value>Group not found</value>
+  </data>
 </root>

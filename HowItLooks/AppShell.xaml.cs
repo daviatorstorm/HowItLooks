@@ -19,6 +19,8 @@ namespace HowItLooks
                 SafeUpdateThemeIcon();
                 SafeUpdateFlyoutIcons();
             };
+
+            Routing.RegisterRoute("Groups/details", typeof(GroupDetailsPage));
         }
 
         private void OnThemeIconClicked(object sender, EventArgs e)

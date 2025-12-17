@@ -45,13 +45,13 @@ namespace HowItLooks
         public string RoundDisplayText => string.Format(Translator.Instance["Round"], RoundCounter);
         public string StartEndButtonText =>
             IsRoundStarted ? Translator.Instance["End"] : Translator.Instance["Start"];
+
         public MainPage()
         {
             InitializeComponent();
             _db = new DatabaseService();
             DeviceDisplay.KeepScreenOn = true;
-            var monsters = _db.GetAllMonsters()
-                                .Where(x => x.GroupId == null)
+            var monsters = _db.GetAllMonstersBy(x => x.GroupId == null)
                                 .Select(x => new Enemy(x));
             Enemies = new ObservableCollection<Enemy>(monsters);
             SortEnemies();

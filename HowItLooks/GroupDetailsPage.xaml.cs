@@ -1,21 +1,40 @@
-using HowItLooks.Models;
-using HowItLooks.Services;
 using HowItLooks.Extension;
-using System.Collections.ObjectModel;
-using HowItLooks.Entities;
+using HowItLooks.Services;
 using HowItLooks.ViewModels;
+using System.Threading.Tasks;
 
 namespace HowItLooks;
 
+[QueryProperty(nameof(Id), "id")]
 public partial class GroupDetailsPage : ContentPage
 {
-    public GroupDetailsPage(GroupEntity group)
+    private int _id;
+    private readonly GroupDetailsViewModel _viewModel;
+    private readonly DatabaseService _db;
+
+    public string Id { set => _id = int.Parse(value); }
+
+    public GroupDetailsPage(DatabaseService db)
     {
         InitializeComponent();
-        var db = new DatabaseService();
         var viewModel = new GroupDetailsViewModel(db);
-        BindingContext =  viewModel;
+        BindingContext = viewModel;
+        _viewModel = viewModel;
+        _db = db;
+    }
+
+    protected override async void OnAppearing()
+    {
+        var group = _db.GetGroupById(_id);
+        if (group == null)
+        {
+            await DisplayAlert(Translator.Instance["Error"], Translator.Instance["GroupNotFound"], "OK");
+            await Shell.Current.GoToAsync("//Groups");
+            return;
+        }
         Title = $"{Translator.Instance["Groups"]}: {group.Name}";
-        viewModel.Init(group);
+        _viewModel.Init(group);
+
+        base.OnAppearing();
     }
 }

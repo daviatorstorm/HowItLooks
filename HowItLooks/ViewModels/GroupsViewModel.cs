@@ -5,19 +5,20 @@ using HowItLooks.Extension;
 using HowItLooks.Models;
 using HowItLooks.Services;
 using System.Collections.ObjectModel;
-using System.Xml.Linq;
 
 namespace HowItLooks.ViewModels
 {
     public partial class GroupsViewModel : ObservableObject
     {
         private readonly DatabaseService _db;
-        private readonly IServiceProvider _serviceProvider;
 
-        [ObservableProperty] private string _pageTitle = Translator.Instance["Groups"];
-        [ObservableProperty] private string _searchText;
+        [ObservableProperty]
+        private string _pageTitle = Translator.Instance["Groups"];
+        [ObservableProperty]
+        private string _searchText;
 
-        [ObservableProperty] private ObservableCollection<Group> _groupList = new();
+        [ObservableProperty]
+        private ObservableCollection<Group> _groupList = new();
 
         public GroupsViewModel(DatabaseService db)
         {
@@ -59,10 +60,7 @@ namespace HowItLooks.ViewModels
         [RelayCommand]
         private async Task OpenGroup(Group group)
         {
-            var groupEntity = new GroupEntity(group);
-            //var viewModel = _serviceProvider.GetService<GroupDetailsViewModel>();
-            var page = new GroupDetailsPage(groupEntity);
-            await Shell.Current.Navigation.PushAsync(page);
+            await Shell.Current.GoToAsync($"//Groups/details?id={group.Id}");
         }
 
         [RelayCommand]

@@ -214,11 +214,29 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Помилка.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Глобальні.
         /// </summary>
         public static string Global {
             get {
                 return ResourceManager.GetString("Global", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Групу не знайдено.
+        /// </summary>
+        public static string GroupNotFound {
+            get {
+                return ResourceManager.GetString("GroupNotFound", resourceCulture);
             }
         }
         

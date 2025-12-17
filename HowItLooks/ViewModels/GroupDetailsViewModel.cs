@@ -5,7 +5,6 @@ using HowItLooks.Extension;
 using HowItLooks.Models;
 using HowItLooks.Services;
 using System.Collections.ObjectModel;
-using static SQLite.SQLite3;
 
 namespace HowItLooks.ViewModels
 {
@@ -23,6 +22,7 @@ namespace HowItLooks.ViewModels
         {
             _db = db;
         }
+
         public void Init(GroupEntity group)
         {
             Group = group;

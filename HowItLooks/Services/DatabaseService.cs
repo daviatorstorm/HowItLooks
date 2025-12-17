@@ -2,6 +2,8 @@
 using HowItLooks.Helpers;
 using HowItLooks.Models;
 using SQLite;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace HowItLooks.Services
 {
@@ -19,6 +21,12 @@ namespace HowItLooks.Services
         public List<EnemyEntity> GetAllMonsters()
         {
             return _db.Table<EnemyEntity>().ToList();
+        }
+
+        public List<EnemyEntity> GetAllMonstersBy(Expression<Func<EnemyEntity, bool>> predExpr)
+        {
+            return _db.Table<EnemyEntity>()
+                .Where(predExpr).ToList();
         }
 
         public EnemyEntity GetMonsterById(int id)
@@ -91,6 +99,11 @@ namespace HowItLooks.Services
         public GroupEntity? GetGroupByName(string name)
         {
             return _db.Table<GroupEntity>().FirstOrDefault(g => g.Name == name);
+        }
+
+        public GroupEntity? GetGroupById(int id)
+        {
+            return _db.Table<GroupEntity>().FirstOrDefault(g => g.Id == id);
         }
 
         public GroupEntity AddGroup(string name)
