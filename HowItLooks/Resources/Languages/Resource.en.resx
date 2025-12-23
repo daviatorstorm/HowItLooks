@@ -228,4 +228,16 @@
   <data name="GroupNotFound" xml:space="preserve">
     <value>Group not found</value>
   </data>
+  <data name="Armor" xml:space="preserve">
+    <value>Armor</value>
+  </data>
+  <data name="HowMuchArmor" xml:space="preserve">
+    <value>how much Armor?</value>
+  </data>
+  <data name="NewName" xml:space="preserve">
+    <value>New name</value>
+  </data>
+  <data name="NameUpdated" xml:space="preserve">
+    <value>Name Updated</value>
+  </data>
 </root>

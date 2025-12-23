@@ -70,10 +70,10 @@ namespace HowItLooks.ViewModels
                 initialValue: "1");
 
             if (!int.TryParse(hpStr, out int hp)) return;
-
+            
             string armorStr = await Shell.Current.DisplayPromptAsync(
-                "Armor",
-                "how much Armor",
+                Translator.Instance["Armor"],
+                Translator.Instance["HowMuchArmor"],
                 Translator.Instance["Save"],
                 Translator.Instance["Cancel"],
                 keyboard: Keyboard.Numeric,

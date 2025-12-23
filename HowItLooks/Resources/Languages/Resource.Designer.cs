@@ -97,6 +97,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Броня.
+        /// </summary>
+        public static string Armor {
+            get {
+                return ResourceManager.GetString("Armor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Клас броні.
         /// </summary>
         public static string ArmorClass {
@@ -241,6 +250,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Скільки броні?.
+        /// </summary>
+        public static string HowMuchArmor {
+            get {
+                return ResourceManager.GetString("HowMuchArmor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to На скільки змінити НР?.
         /// </summary>
         public static string HowMuchToChangeHP {
@@ -309,6 +327,24 @@ namespace HowItLooks.Resources.Languages {
         public static string NameTheMonster {
             get {
                 return ResourceManager.GetString("NameTheMonster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва оновлена.
+        /// </summary>
+        public static string NameUpdated {
+            get {
+                return ResourceManager.GetString("NameUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нова назва.
+        /// </summary>
+        public static string NewName {
+            get {
+                return ResourceManager.GetString("NewName", resourceCulture);
             }
         }
         
