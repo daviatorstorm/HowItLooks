@@ -97,6 +97,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Броня.
+        /// </summary>
+        public static string Armor {
+            get {
+                return ResourceManager.GetString("Armor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Клас броні.
         /// </summary>
         public static string ArmorClass {
@@ -214,11 +223,38 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Помилка.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Глобальні.
         /// </summary>
         public static string Global {
             get {
                 return ResourceManager.GetString("Global", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Групу не знайдено.
+        /// </summary>
+        public static string GroupNotFound {
+            get {
+                return ResourceManager.GetString("GroupNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Скільки броні?.
+        /// </summary>
+        public static string HowMuchArmor {
+            get {
+                return ResourceManager.GetString("HowMuchArmor", resourceCulture);
             }
         }
         
@@ -291,6 +327,24 @@ namespace HowItLooks.Resources.Languages {
         public static string NameTheMonster {
             get {
                 return ResourceManager.GetString("NameTheMonster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва оновлена.
+        /// </summary>
+        public static string NameUpdated {
+            get {
+                return ResourceManager.GetString("NameUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нова назва.
+        /// </summary>
+        public static string NewName {
+            get {
+                return ResourceManager.GetString("NewName", resourceCulture);
             }
         }
         

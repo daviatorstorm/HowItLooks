@@ -222,4 +222,22 @@
   <data name="NameTheCreature" xml:space="preserve">
     <value>Назвіть істоту:</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="GroupNotFound" xml:space="preserve">
+    <value>Групу не знайдено</value>
+  </data>
+  <data name="Armor" xml:space="preserve">
+    <value>Броня</value>
+  </data>
+  <data name="HowMuchArmor" xml:space="preserve">
+    <value>Скільки броні?</value>
+  </data>
+  <data name="NewName" xml:space="preserve">
+    <value>Нова назва</value>
+  </data>
+  <data name="NameUpdated" xml:space="preserve">
+    <value>Назва оновлена</value>
+  </data>
 </root>

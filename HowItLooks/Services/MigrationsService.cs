@@ -14,6 +14,7 @@ namespace HowItLooks.Services
         private void Init()
         {
             _migrations.Add(new _150620251724_Initial());
+            _migrations.Add(new _221020251201_AddGroups());
         }
 
         public void Migrate(int currentVersion, Action<BaseMigration> iter)

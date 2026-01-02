@@ -19,6 +19,8 @@ namespace HowItLooks
                 SafeUpdateThemeIcon();
                 SafeUpdateFlyoutIcons();
             };
+
+            Routing.RegisterRoute("Groups/details", typeof(GroupDetailsPage));
         }
 
         private void OnThemeIconClicked(object sender, EventArgs e)
@@ -59,6 +61,11 @@ namespace HowItLooks
         private async void OnGlobalsTapped(object sender, EventArgs e)
         {
             await GoToAsync("//Globals");
+            Shell.Current.FlyoutIsPresented = false;
+        }
+        private async void OnGroupsTapped(object sender, EventArgs e)
+        {
+            await GoToAsync("//Groups");
             Shell.Current.FlyoutIsPresented = false;
         }
         private void OnLanguagePickerChanged(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using HowItLooks.Entities;
 using HowItLooks.Models;
 using HowItLooks.Services;
+using HowItLooks.ViewModels;
 using System.Collections.ObjectModel;
 using HowItLooks.Extension;
 
@@ -44,12 +45,14 @@ namespace HowItLooks
         public string RoundDisplayText => string.Format(Translator.Instance["Round"], RoundCounter);
         public string StartEndButtonText =>
             IsRoundStarted ? Translator.Instance["End"] : Translator.Instance["Start"];
+
         public MainPage()
         {
             InitializeComponent();
             _db = new DatabaseService();
             DeviceDisplay.KeepScreenOn = true;
-            var monsters = _db.GetAllMonsters().Select(x => new Enemy(x));
+            var monsters = _db.GetAllMonstersBy(x => x.GroupId == null)
+                                .Select(x => new Enemy(x));
             Enemies = new ObservableCollection<Enemy>(monsters);
             SortEnemies();
             _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive);
@@ -370,6 +373,46 @@ namespace HowItLooks
             };
 
             _db.UpdateMonster(new EnemyEntity(enemy));
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            System.Diagnostics.Debug.WriteLine("🔵 OnAppearing called - GroupDetailsPage");
+
+            MessagingCenter.Subscribe<GroupDetailsViewModel>(this, "EnemiesUpdated", (sender) =>
+            {
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+            MessagingCenter.Subscribe<GroupsViewModel>(this, "EnemiesUpdated", (sender) =>
+            {
+                RefreshEnemiesFromDatabase();
+                SortEnemies();
+            });
+        }
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    //_logger.LogInformation("OnAppearing called");
+        //    System.Diagnostics.Debug.WriteLine("🔵 OnDisappearing called - GroupDetailsPage");
+        // 
+        //    MessagingCenter.Unsubscribe<GroupDetailsPage>(this, "EnemiesUpdated");
+        //}
+
+        private void RefreshEnemiesFromDatabase()
+        {
+            var allEnemies = _db.GetAllMonsters().Where(e => e.GroupId == null);
+
+            var existingIds = Enemies.Select(e => e.Id).ToHashSet();
+
+            foreach (var entity in allEnemies)
+            {
+                if (!existingIds.Contains(entity.Id) && entity.GroupId == null)
+                {
+                    Enemies.Add(new Enemy(entity));
+                }
+            }
         }
     }
 }
