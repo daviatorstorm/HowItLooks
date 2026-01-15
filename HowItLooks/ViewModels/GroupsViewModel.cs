@@ -33,6 +33,33 @@ namespace HowItLooks.ViewModels
             foreach (var g in groupsFromDb)
                 GroupList.Add(new Group(g));
         }
+        private async Task<CampaignEntity?> PickCampaign()
+        {
+            var campaigns = _db.GetAllCampaigns();
+
+            if (campaigns.Count == 0)
+            {
+                await Shell.Current.DisplayAlert(
+                    Translator.Instance["Info"],
+                    Translator.Instance["NoCampaigns"],
+                    "OK");
+                return null;
+            }
+
+            var names = campaigns.Select(c => c.Name).ToArray();
+
+            string selectedName = await Shell.Current.DisplayActionSheet(
+                Translator.Instance["ChooseCampaign"],
+                Translator.Instance["Cancel"],
+                null,
+                names);
+
+            if (string.IsNullOrWhiteSpace(selectedName) ||
+                selectedName == Translator.Instance["Cancel"])
+                return null;
+
+            return campaigns.First(c => c.Name == selectedName);
+        }
 
         [RelayCommand]
         private async Task AddGroup()
@@ -66,7 +93,7 @@ namespace HowItLooks.ViewModels
         [RelayCommand]
         private async Task ShowGroupOptions(Group group)
         {
-            string addAllText = Translator.Instance["AddAllEnemiesToMainPage"];
+            string addAllText = Translator.Instance["AddAllEnemiesToBattle"];
             string changeNameText = Translator.Instance["ChangeName"];
             string deleteText = Translator.Instance["Delete"];
 
@@ -79,25 +106,28 @@ namespace HowItLooks.ViewModels
                 deleteText);
 
             if (action == addAllText)
-                AddAllGroupEnemiesToMain(group);
+                await AddAllGroupEnemiesToMain(group);
             else if (action == changeNameText)
                 await RenameGroup(group);
             else if (action == deleteText)
                 await DeleteGroup(group);
         }
 
-        private void AddAllGroupEnemiesToMain(Group group)
+        private async Task AddAllGroupEnemiesToMain(Group group)
         {
             var enemies = _db.GetEnemiesByGroupId(group.Id);
 
             if (enemies.Count == 0)
             {
-                Shell.Current.DisplayAlert(
-                    Translator.Instance["Info"],
-                    Translator.Instance["GroupHasNoEnemies"],
-                    "OK");
+                await Shell.Current.DisplayAlert(
+                      Translator.Instance["Info"],
+                      Translator.Instance["GroupHasNoEnemies"],
+                      "OK");
                 return;
             }
+
+            var campaign = await PickCampaign();
+            if (campaign == null) return;
 
             foreach (var enemyEntity in enemies)
             {
@@ -109,16 +139,17 @@ namespace HowItLooks.ViewModels
                 newEntity.TempHitPoints = enemyEntity.TempHitPoints;
                 newEntity.CreatureType = enemyEntity.CreatureType;
                 newEntity.GroupId = null;
+                newEntity.CampaignId = campaign.Id;
 
                 _db.UpdateMonster(newEntity);
             }
 
-            MessagingCenter.Send(this, "EnemiesUpdated");
+            //MessagingCenter.Send(this, "EnemiesUpdated");
 
-            Shell.Current.DisplayAlert(
-                Translator.Instance["Done"],
-                $"{Translator.Instance["EnemiesFrom"]} '{group.Name}' {Translator.Instance["AddedToMainPage"]}!",
-                "OK");
+            await Shell.Current.DisplayAlert(
+                  Translator.Instance["Done"],
+                  $"{Translator.Instance["EnemiesFrom"]} '{group.Name}' {Translator.Instance["AddedToMainPage"]}!",
+                  "OK");
         }
 
         private async Task RenameGroup(Group group)

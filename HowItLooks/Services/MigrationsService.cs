@@ -10,11 +10,12 @@ namespace HowItLooks.Services
         {
             Init();
         }
-
+        
         private void Init()
         {
             _migrations.Add(new _150620251724_Initial());
-            _migrations.Add(new _221020251201_AddGroups());
+            _migrations.Add(new _221020251201_AddGroups()); 
+            _migrations.Add(new _060120261302_AddCampaigns());
         }
 
         public void Migrate(int currentVersion, Action<BaseMigration> iter)

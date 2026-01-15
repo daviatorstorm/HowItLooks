@@ -88,6 +88,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Campaigns.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Globals.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

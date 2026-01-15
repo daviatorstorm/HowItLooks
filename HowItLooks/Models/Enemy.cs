@@ -14,6 +14,7 @@ public class Enemy : INotifyPropertyChanged
     private int _armorClass;
     private int _tempHitPoints;
     private int? _groupId;
+    private int? _campaignId;
     private CreatureType _creatureType;
 
     public int Id { get; set; }
@@ -102,6 +103,18 @@ public class Enemy : INotifyPropertyChanged
             }
         }
     }
+    public int? CampaignId
+    {
+        get => _campaignId;
+        set
+        {
+            if (_campaignId != value)
+            {
+                _campaignId = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public bool IsActive
     {
@@ -142,6 +155,7 @@ public class Enemy : INotifyPropertyChanged
         TempHitPoints = entity.TempHitPoints;
         CreatureType = entity.CreatureType;
         GroupId = entity.GroupId;
+        CampaignId = entity.CampaignId;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -184,5 +198,5 @@ public class Enemy : INotifyPropertyChanged
         if (HitPointsLeft < 0) HitPointsLeft = 0;
 
         OnPropertyChanged(nameof(HitPointsLabel));
-    }
+    }   
 }

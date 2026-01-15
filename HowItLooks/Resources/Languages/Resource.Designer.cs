@@ -61,6 +61,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Кампанія з цією назвою вже існує.
+        /// </summary>
+        public static string ACampaignWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ACampaignWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Додати.
         /// </summary>
         public static string Add {
@@ -79,11 +88,29 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Додати всіх ворогі до битви.
+        /// </summary>
+        public static string AddAllEnemiesToBattle {
+            get {
+                return ResourceManager.GetString("AddAllEnemiesToBattle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Додати монстра.
         /// </summary>
         public static string AddAMonster {
             get {
                 return ResourceManager.GetString("AddAMonster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Додати до кампанії.
+        /// </summary>
+        public static string AddToCampaign {
+            get {
+                return ResourceManager.GetString("AddToCampaign", resourceCulture);
             }
         }
         
@@ -111,6 +138,33 @@ namespace HowItLooks.Resources.Languages {
         public static string ArmorClass {
             get {
                 return ResourceManager.GetString("ArmorClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Битва.
+        /// </summary>
+        public static string Battle {
+            get {
+                return ResourceManager.GetString("Battle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва кампанії.
+        /// </summary>
+        public static string CampaignName {
+            get {
+                return ResourceManager.GetString("CampaignName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Кампанії.
+        /// </summary>
+        public static string Campaigns {
+            get {
+                return ResourceManager.GetString("Campaigns", resourceCulture);
             }
         }
         
@@ -174,6 +228,15 @@ namespace HowItLooks.Resources.Languages {
         public static string ChangeTempHP {
             get {
                 return ResourceManager.GetString("ChangeTempHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виберіть кампанію:.
+        /// </summary>
+        public static string ChooseCampaign {
+            get {
+                return ResourceManager.GetString("ChooseCampaign", resourceCulture);
             }
         }
         
@@ -304,6 +367,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Інформація.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Основна.
         /// </summary>
         public static string Main {
@@ -340,6 +412,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Нова кампанія.
+        /// </summary>
+        public static string NewCampaign {
+            get {
+                return ResourceManager.GetString("NewCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Нова назва.
         /// </summary>
         public static string NewName {
@@ -354,6 +435,24 @@ namespace HowItLooks.Resources.Languages {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ні.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Немає кампаній.
+        /// </summary>
+        public static string NoCampaigns {
+            get {
+                return ResourceManager.GetString("NoCampaigns", resourceCulture);
             }
         }
         
@@ -394,6 +493,24 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Перейменувати.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Перейменувати кампанію.
+        /// </summary>
+        public static string RenameCampaign {
+            get {
+                return ResourceManager.GetString("RenameCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Раунд: {0}.
         /// </summary>
         public static string Round {
@@ -421,11 +538,38 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Успіх.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to до кампанії.
+        /// </summary>
+        public static string ToCampaign {
+            get {
+                return ResourceManager.GetString("ToCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to На яке ім&apos;я ви його зміните?.
         /// </summary>
         public static string WhatNameWillYouChange {
             get {
                 return ResourceManager.GetString("WhatNameWillYouChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tак.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

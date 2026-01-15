@@ -16,6 +16,7 @@ namespace HowItLooks.Services
             _db = DatabaseHelper.CreateDatabaseConnection();
             _db.CreateTable<GroupEntity>();
             _db.CreateTable<EnemyEntity>();
+            _db.CreateTable<CampaignEntity>();
         }
 
         public List<EnemyEntity> GetAllMonsters()
@@ -125,6 +126,40 @@ namespace HowItLooks.Services
         public void UpdateGroup(GroupEntity group)
         {
             _db.Update(group);
+        }
+
+        public List<CampaignEntity> GetAllCampaigns()
+        {
+            return _db.Table<CampaignEntity>().ToList();
+        }
+
+        public CampaignEntity AddCampaign(string name)
+        {
+            var campaign = new CampaignEntity { Name = name };
+            _db.Insert(campaign);
+            return campaign;
+        }
+
+        public void UpdateCampaign(CampaignEntity campaign)
+        {
+            _db.Update(campaign);
+        }
+
+        public void DeleteCampaign(CampaignEntity campaign)
+        {
+            var enemies = _db.Table<EnemyEntity>().Where(e => e.CampaignId == campaign.Id).ToList();
+            foreach (var e in enemies)
+                _db.Delete(e);
+
+            _db.Delete(campaign);
+        }
+        public CampaignEntity? GetCampaignByName(string name)
+        {
+            return _db.Table<CampaignEntity>().FirstOrDefault(c => c.Name == name);
+        }
+        public CampaignEntity? GetCampaignById(int id)
+        {
+            return _db.Table<CampaignEntity>().FirstOrDefault(c => c.Id == id);
         }
     }
 }

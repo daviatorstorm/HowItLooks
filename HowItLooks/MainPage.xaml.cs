@@ -4,26 +4,31 @@ using HowItLooks.Services;
 using HowItLooks.ViewModels;
 using System.Collections.ObjectModel;
 using HowItLooks.Extension;
+using HowItLooks.State;
 
 namespace HowItLooks
 {
+    [QueryProperty(nameof(CampaignId), "id")]
     public partial class MainPage : ContentPage
     {
         public ObservableCollection<Enemy> Enemies { get; set; }
         private Enemy? _activeEnemy;
         private readonly DatabaseService _db;
 
-        private bool _isRoundStarted = false;
-        private int _roundCounter = 1;
+        //private bool _isRoundStarted = false;
+        //private int _roundCounter = 1;
+        private RoundState _roundState = null!;
 
+        private int _campaignId;
+        public string CampaignId { set => _campaignId = int.Parse(value); }
         public int RoundCounter
         {
-            get => _roundCounter;
+            get => _roundState.RoundCounter;
             set
             {
-                if (_roundCounter != value)
+                if (_roundState.RoundCounter != value)
                 {
-                    _roundCounter = value;
+                    _roundState.RoundCounter = value;
                     OnPropertyChanged(nameof(RoundCounter));
                     OnPropertyChanged(nameof(RoundDisplayText));
                 }
@@ -31,12 +36,12 @@ namespace HowItLooks
         }
         public bool IsRoundStarted
         {
-            get => _isRoundStarted;
+            get => _roundState.IsStarted;
             set
             {
-                if (_isRoundStarted != value)
+                if (_roundState.IsStarted != value)
                 {
-                    _isRoundStarted = value;
+                    _roundState.IsStarted = value;
                     OnPropertyChanged(nameof(IsRoundStarted));
                     OnPropertyChanged(nameof(StartEndButtonText));
                 }
@@ -46,24 +51,58 @@ namespace HowItLooks
         public string StartEndButtonText =>
             IsRoundStarted ? Translator.Instance["End"] : Translator.Instance["Start"];
 
-        public MainPage()
+        public MainPage(DatabaseService db)
         {
             InitializeComponent();
-            _db = new DatabaseService();
+            _db = db;
             DeviceDisplay.KeepScreenOn = true;
-            var monsters = _db.GetAllMonstersBy(x => x.GroupId == null)
-                                .Select(x => new Enemy(x));
-            Enemies = new ObservableCollection<Enemy>(monsters);
-            SortEnemies();
-            _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive);
+            Enemies = new ObservableCollection<Enemy>();
             //BindingContext = new EnemiesViewModel();
 
+            _roundState = new RoundState();
             BindingContext = this;
             Translator.Instance.PropertyChanged += (s, e) =>
             {
                 OnPropertyChanged(nameof(StartEndButtonText));
                 OnPropertyChanged(nameof(RoundDisplayText));
             };
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var campaign = _db.GetCampaignById(_campaignId);
+            if (campaign == null)
+            {
+                await DisplayAlert(
+                    Translator.Instance["Error"],
+                    "Campaign not found",
+                    "OK");
+
+                await Shell.Current.GoToAsync("//Campaigns");
+                return;
+            }
+
+            Title = campaign.Name;
+            _roundState = CampaignRoundStore.Get(_campaignId);
+            LoadCampaignEnemies();
+
+            OnPropertyChanged(nameof(IsRoundStarted));
+            OnPropertyChanged(nameof(RoundCounter));
+            OnPropertyChanged(nameof(StartEndButtonText));
+            OnPropertyChanged(nameof(RoundDisplayText));
+        }
+        private void LoadCampaignEnemies()
+        {
+            var monsters = _db.GetAllMonstersBy(x => x.GroupId == null && x.CampaignId == _campaignId)
+                                .Select(x => new Enemy(x));
+
+            foreach (var enemy in monsters)
+                Enemies.Add(enemy);
+
+            SortEnemies();
+            _activeEnemy = Enemies.FirstOrDefault(x => x.IsActive && x.CampaignId == _campaignId);
         }
 
         private async void AddEnemyClicked(object sender, EventArgs e)
@@ -94,6 +133,7 @@ namespace HowItLooks
 
             var entity = _db.AddMonster(newMonsterName);
             entity.CreatureType = selectedType;
+            entity.CampaignId = _campaignId;
             _db.UpdateMonster(entity);
             var newEnemy = new Enemy(entity);
             Enemies.Add(newEnemy);
@@ -273,7 +313,7 @@ namespace HowItLooks
             int index = sorted.IndexOf(_activeEnemy);
             int previousIndex = (index - 1 + sorted.Count) % sorted.Count;
 
-            if (_isRoundStarted && index == 0 && previousIndex == sorted.Count - 1)
+            if (_roundState.IsStarted && index == 0 && previousIndex == sorted.Count - 1)
             {
                 if (RoundCounter > 1)
                 {
@@ -292,7 +332,7 @@ namespace HowItLooks
             int index = sorted.IndexOf(_activeEnemy);
             int nextIndex = (index + 1) % sorted.Count;
 
-            if (_isRoundStarted && index == sorted.Count - 1 && nextIndex == 0)
+            if (_roundState.IsStarted && index == sorted.Count - 1 && nextIndex == 0)
             {
                 RoundCounter++;
                 OnPropertyChanged(nameof(StartEndButtonText));
@@ -309,9 +349,9 @@ namespace HowItLooks
 
         private void StartEndButton_Clicked(object sender, EventArgs e)
         {
-            if (!_isRoundStarted)
+            if (!_roundState.IsStarted)
             {
-                _isRoundStarted = true;
+                _roundState.IsStarted = true;
                 RoundCounter = 1;
                 RoundCounterBorder.IsVisible = true;
 
@@ -321,7 +361,7 @@ namespace HowItLooks
             }
             else
             {
-                _isRoundStarted = false;
+                _roundState.IsStarted = false;
                 RoundCounterBorder.IsVisible = false;
             }
             OnPropertyChanged(nameof(StartEndButtonText));
@@ -374,31 +414,6 @@ namespace HowItLooks
 
             _db.UpdateMonster(new EnemyEntity(enemy));
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            System.Diagnostics.Debug.WriteLine("🔵 OnAppearing called - GroupDetailsPage");
-
-            MessagingCenter.Subscribe<GroupDetailsViewModel>(this, "EnemiesUpdated", (sender) =>
-            {
-                RefreshEnemiesFromDatabase();
-                SortEnemies();
-            });
-            MessagingCenter.Subscribe<GroupsViewModel>(this, "EnemiesUpdated", (sender) =>
-            {
-                RefreshEnemiesFromDatabase();
-                SortEnemies();
-            });
-        }
-        //protected override void OnDisappearing()
-        //{
-        //    base.OnDisappearing();
-        //    //_logger.LogInformation("OnAppearing called");
-        //    System.Diagnostics.Debug.WriteLine("🔵 OnDisappearing called - GroupDetailsPage");
-        // 
-        //    MessagingCenter.Unsubscribe<GroupDetailsPage>(this, "EnemiesUpdated");
-        //}
 
         private void RefreshEnemiesFromDatabase()
         {
