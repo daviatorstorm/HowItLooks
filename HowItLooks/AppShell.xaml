@@ -9,7 +9,8 @@
     xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
     Title="How it looks">
 
-    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Route="Campaigns" ContentTemplate="{DataTemplate local:Campaigns}" />
+    <!--<ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />-->
     <ShellContent Route="Globals" ContentTemplate="{DataTemplate local:Globals}" />
     <ShellContent Route="Groups" ContentTemplate="{DataTemplate local:Groups}" />
     <!--<ShellContent Route="Groups/details" ContentTemplate="{DataTemplate local:GroupDetailsPage}" />-->
@@ -22,7 +23,7 @@
         <VerticalStackLayout Padding="10" Spacing="20">
             <Grid Padding="10">
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnMainTapped" />
+                    <TapGestureRecognizer Tapped="OnCampaignsTapped" />
                 </Grid.GestureRecognizers>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -32,7 +33,7 @@
                 <Image x:Name="MainIcon"
                        Source="campaign.png"
                        Style="{StaticResource FlyoutMenuIconStyle}"/>
-                <Label Text="{extension:Translate Key=Main}"
+                <Label Text="{extension:Translate Key=Battle}"
                        Grid.Column="1"
                        Style="{StaticResource FlyoutMenuLabelStyle}" />
             </Grid>

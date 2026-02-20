@@ -240,4 +240,52 @@
   <data name="NameUpdated" xml:space="preserve">
     <value>Назва оновлена</value>
   </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Кампанії</value>
+  </data>
+  <data name="Battle" xml:space="preserve">
+    <value>Битва</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Перейменувати</value>
+  </data>
+  <data name="AddAllEnemiesToBattle" xml:space="preserve">
+    <value>Додати всіх ворогі до битви</value>
+  </data>
+  <data name="NewCampaign" xml:space="preserve">
+    <value>Нова кампанія</value>
+  </data>
+  <data name="CampaignName" xml:space="preserve">
+    <value>Назва кампанії</value>
+  </data>
+  <data name="AddToCampaign" xml:space="preserve">
+    <value>Додати до кампанії</value>
+  </data>
+  <data name="ToCampaign" xml:space="preserve">
+    <value>до кампанії</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успіх</value>
+  </data>
+  <data name="ChooseCampaign" xml:space="preserve">
+    <value>Виберіть кампанію:</value>
+  </data>
+  <data name="NoCampaigns" xml:space="preserve">
+    <value>Немає кампаній</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Інформація</value>
+  </data>
+  <data name="ACampaignWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Кампанія з цією назвою вже існує</value>
+  </data>
+  <data name="RenameCampaign" xml:space="preserve">
+    <value>Перейменувати кампанію</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tак</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Ні</value>
+  </data>
 </root>

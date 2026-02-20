@@ -18,6 +18,7 @@ public class EnemyEntity
 
     public bool IsActive { get; set; }
     public int? GroupId { get; set; }
+    public int? CampaignId { get; set; }
 
     public EnemyEntity()
     {
@@ -35,6 +36,7 @@ public class EnemyEntity
         TempHitPoints = enemy.TempHitPoints;
         CreatureType = enemy.CreatureType;
         GroupId = enemy.GroupId;
+        CampaignId = enemy.CampaignId;
     }
 }
 

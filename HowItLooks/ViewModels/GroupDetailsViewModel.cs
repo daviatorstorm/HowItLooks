@@ -29,6 +29,33 @@ namespace HowItLooks.ViewModels
             var enemyEntities = _db.GetEnemiesByGroupId(group.Id);
             Enemies = new ObservableCollection<Enemy>(enemyEntities.Select(e => new Enemy(e)));
         }
+        private async Task<CampaignEntity?> PickCampaignAsync()
+        {
+            var campaigns = _db.GetAllCampaigns();
+
+            if (campaigns.Count == 0)
+            {
+                await Shell.Current.DisplayAlert(
+                    Translator.Instance["Info"],
+                    Translator.Instance["NoCampaigns"],
+                    "OK");
+                return null;
+            }
+
+            var names = campaigns.Select(c => c.Name).ToArray();
+
+            string selectedName = await Shell.Current.DisplayActionSheet(
+                Translator.Instance["ChooseCampaign"],
+                Translator.Instance["Cancel"],
+                null,
+                names);
+
+            if (string.IsNullOrWhiteSpace(selectedName) ||
+                selectedName == Translator.Instance["Cancel"])
+                return null;
+
+            return campaigns.First(c => c.Name == selectedName);
+        }
 
         [RelayCommand]
         public async Task AddEnemyAsync()
@@ -232,12 +259,15 @@ namespace HowItLooks.ViewModels
             _db.UpdateMonster(new EnemyEntity(enemy));
         }
 
-        [RelayCommand]
+        [RelayCommand] 
         public async Task AddSingleEnemyToMainPageAsync(Enemy enemy)
         {
+            var campaign = await PickCampaignAsync();
+            if (campaign == null) return;
+
             bool confirm = await Shell.Current.DisplayAlert(
-                $"{Translator.Instance["AddToBattle"]}?",
-                $"{enemy.Name} {Translator.Instance["ToTheMainPage"]}?",
+                $"{Translator.Instance["AddToCampaign"]}?",
+                $"{enemy.Name} → {Translator.Instance["ToCampaign"]} {campaign.Name}?",
                 Translator.Instance["Yes"],
                 Translator.Instance["No"]);
 
@@ -251,13 +281,14 @@ namespace HowItLooks.ViewModels
             entity.TempHitPoints = enemy.TempHitPoints;
             entity.CreatureType = enemy.CreatureType;
             entity.GroupId = null;
+            entity.CampaignId = campaign.Id;
 
             _db.UpdateMonster(entity);
-            MessagingCenter.Send(this, "EnemiesUpdated");
+            //MessagingCenter.Send(this, "EnemiesUpdated");
 
             await Shell.Current.DisplayAlert(
                 Translator.Instance["Success"],
-                $"{enemy.Name} {Translator.Instance["AddedInMainPage"]}",
+                $"{enemy.Name} {Translator.Instance["AddedToCampaign"]} {campaign.Name}",
                 "OK");
         }
 
@@ -273,6 +304,9 @@ namespace HowItLooks.ViewModels
                 return;
             }
 
+            var campaign = await PickCampaignAsync();
+            if (campaign == null) return;
+
             foreach (var enemy in Enemies)
             {
                 var entity = _db.AddMonster(enemy.Name);
@@ -283,14 +317,15 @@ namespace HowItLooks.ViewModels
                 entity.TempHitPoints = enemy.TempHitPoints;
                 entity.CreatureType = enemy.CreatureType;
                 entity.GroupId = null;
+                entity.CampaignId = campaign.Id;
                 _db.UpdateMonster(entity);
             }
 
-            MessagingCenter.Send(this, "EnemiesUpdated");
+            //MessagingCenter.Send(this, "EnemiesUpdated");
 
             await Shell.Current.DisplayAlert(
                 Translator.Instance["Success"],
-                $"{Enemies.Count} {Translator.Instance["AddedInMainPage"]}",
+                $"{Enemies.Count} {Translator.Instance["AddedToCampaign"]} {campaign.Name}",
                 "OK");
         }
     }

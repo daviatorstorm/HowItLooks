@@ -240,4 +240,52 @@
   <data name="NameUpdated" xml:space="preserve">
     <value>Name Updated</value>
   </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="Battle" xml:space="preserve">
+    <value>Battle</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="AddAllEnemiesToBattle" xml:space="preserve">
+    <value>Add all enemies to battle</value>
+  </data>
+  <data name="NewCampaign" xml:space="preserve">
+    <value>New campaign</value>
+  </data>
+  <data name="CampaignName" xml:space="preserve">
+    <value>Campaign name</value>
+  </data>
+  <data name="AddToCampaign" xml:space="preserve">
+    <value>Add to campaign</value>
+  </data>
+  <data name="ToCampaign" xml:space="preserve">
+    <value>to campaign</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="ChooseCampaign" xml:space="preserve">
+    <value>Choose campaign:</value>
+  </data>
+  <data name="NoCampaigns" xml:space="preserve">
+    <value>No campaigns</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="ACampaignWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A campaign with this name already exists</value>
+  </data>
+  <data name="RenameCampaign" xml:space="preserve">
+    <value>Rename campaign</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
 </root>

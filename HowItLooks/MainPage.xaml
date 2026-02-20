@@ -12,7 +12,7 @@
             Spacing="25">
                 <Border x:Name="RoundCounterBorder"
                     Style="{StaticResource RoundCounterBorderStyle}"
-                    IsVisible="False">
+                    IsVisible="{Binding IsRoundStarted}">
                     <Label x:Name="RoundCounterLabel"
                        Text="{Binding RoundDisplayText}"
                        Style="{StaticResource RoundCounterLabelStyle}"/>

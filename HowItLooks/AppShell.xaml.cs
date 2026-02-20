@@ -21,6 +21,7 @@ namespace HowItLooks
             };
 
             Routing.RegisterRoute("Groups/details", typeof(GroupDetailsPage));
+            Routing.RegisterRoute("Campaigns/main", typeof(MainPage));
         }
 
         private void OnThemeIconClicked(object sender, EventArgs e)
@@ -66,6 +67,11 @@ namespace HowItLooks
         private async void OnGroupsTapped(object sender, EventArgs e)
         {
             await GoToAsync("//Groups");
+            Shell.Current.FlyoutIsPresented = false;
+        }
+        private async void OnCampaignsTapped(object sender, EventArgs e)
+        {
+            await GoToAsync("//Campaigns");
             Shell.Current.FlyoutIsPresented = false;
         }
         private void OnLanguagePickerChanged(object sender, EventArgs e)

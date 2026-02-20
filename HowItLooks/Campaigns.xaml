@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
+    xmlns:extension="clr-namespace:HowItLooks.Extension"
+    xmlns:viewmodels="clr-namespace:HowItLooks.ViewModels"
+    x:Class="HowItLooks.Campaigns"
+    Title="{extension:Translate Key=Campaigns}">
+    
+    <VerticalStackLayout Padding="10">
+
+        <Grid ColumnDefinitions="*,Auto" Padding="5">
+            <Button 
+                    x:Name="AddListItem"
+                    Text="{extension:Translate Key=Add}"
+                    Command="{Binding AddCampaignCommand}"
+                    Margin="0,0,0,10"/>
+        </Grid>
+
+        <CollectionView ItemsSource="{Binding Campaigns}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#ccc"
+                           CornerRadius="10"
+                           Padding="10"
+                           Margin="5"
+                           HasShadow="True">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="5">
+                            <Image Grid.Column="0"
+                                   WidthRequest="24"
+                                   HeightRequest="24"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,10,0">
+                                <Image.Source>
+                                    <AppThemeBinding Light="swords_dark.png" Dark="swords_light.png" />
+                                </Image.Source>
+                            </Image>
+                            <Label Text="{Binding Name}"
+                                   FontSize="26"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1"/>
+
+                            <Button Text="⋮"
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CampaignsViewModel}},
+                                              Path=ShowCampaignOptionsCommand}"
+                                    CommandParameter="{Binding .}" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CampaignsViewModel}},
+                                              Path=OpenCampaignCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>
