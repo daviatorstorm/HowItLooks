@@ -250,6 +250,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Виберіть групу:.
+        /// </summary>
+        public static string ChooseGroup {
+            get {
+                return ResourceManager.GetString("ChooseGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Видалити.
         /// </summary>
         public static string Delete {
@@ -457,6 +466,15 @@ namespace HowItLooks.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Немає груп.
+        /// </summary>
+        public static string NoGroups {
+            get {
+                return ResourceManager.GetString("NoGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Попередній.
         /// </summary>
         public static string Previous {
@@ -543,6 +561,15 @@ namespace HowItLooks.Resources.Languages {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to У цієї групи немає ворогів.
+        /// </summary>
+        public static string ThisGroupHasNoEnemies {
+            get {
+                return ResourceManager.GetString("ThisGroupHasNoEnemies", resourceCulture);
             }
         }
         

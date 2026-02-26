@@ -288,4 +288,13 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="ChooseGroup" xml:space="preserve">
+    <value>Choose group:</value>
+  </data>
+  <data name="NoGroups" xml:space="preserve">
+    <value>No groups</value>
+  </data>
+  <data name="ThisGroupHasNoEnemies" xml:space="preserve">
+    <value>This group has no enemies</value>
+  </data>
 </root>

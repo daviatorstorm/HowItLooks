@@ -113,12 +113,21 @@ namespace HowItLooks
                 { "Monster", CreatureType.Monster },
                 { "NPC", CreatureType.NPC }
             };
-            
+
+            var options = typeMap.Keys
+                .Append("Group")
+                .ToArray();
+
             string selected = await DisplayActionSheet(Translator.Instance["ChooseCreatureType"],
                                                        Translator.Instance["Cancel"],
                                                        null,
-                                                       typeMap.Keys.ToArray());
+                                                       options);
 
+            if (selected == "Group")
+            {
+                await AddGroupEnemiesToCampaign();
+                return;
+            }
             if (string.IsNullOrWhiteSpace(selected) || selected == Translator.Instance["Cancel"] || !typeMap.ContainsKey(selected))
                 return;
 
@@ -428,6 +437,71 @@ namespace HowItLooks
                     Enemies.Add(new Enemy(entity));
                 }
             }
+        }
+
+        private async Task<GroupEntity?> PickGroup()
+        {
+            var groups = _db.GetAllGroups();
+
+            if (groups.Count == 0)
+            {
+                await DisplayAlert(
+                    Translator.Instance["Info"],
+                    Translator.Instance["NoGroups"],
+                    "OK");
+                return null;
+            }
+
+            var names = groups.Select(g => g.Name).ToArray();
+
+            string selectedName = await DisplayActionSheet(
+                Translator.Instance["ChooseGroup"],
+                Translator.Instance["Cancel"],
+                null,
+                names);
+
+            if (string.IsNullOrWhiteSpace(selectedName) ||
+                selectedName == Translator.Instance["Cancel"])
+                return null;
+
+            return groups.First(g => g.Name == selectedName);
+        }
+
+        private async Task AddGroupEnemiesToCampaign()
+        {
+            var group = await PickGroup();
+            if (group == null) return;
+
+            var enemiesInGroup = _db.GetAllMonstersBy(m => m.GroupId == group.Id);
+
+            if (enemiesInGroup.Count == 0)
+            {
+                await DisplayAlert(
+                    Translator.Instance["Info"],
+                    Translator.Instance["ThisGroupHasNoEnemies"],
+                    "OK");
+                return;
+            }
+
+            foreach (var enemy in enemiesInGroup)
+            {
+                var entity = _db.AddMonster(enemy.Name);
+                entity.HitPoints = enemy.HitPoints;
+                entity.HitPointsLeft = enemy.HitPointsLeft;
+                entity.Initiative = enemy.Initiative;
+                entity.ArmorClass = enemy.ArmorClass;
+                entity.TempHitPoints = enemy.TempHitPoints;
+                entity.CreatureType = enemy.CreatureType;
+                entity.GroupId = null;
+                entity.CampaignId = _campaignId;
+
+                _db.UpdateMonster(entity);
+
+                Enemies.Add(new Enemy(entity));
+            }
+
+            if (Enemies.Count > 0 && _activeEnemy == null)
+                SetActiveEnemy(Enemies.First());
         }
     }
 }

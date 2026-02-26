@@ -288,4 +288,13 @@
   <data name="No" xml:space="preserve">
     <value>Ні</value>
   </data>
+  <data name="ChooseGroup" xml:space="preserve">
+    <value>Виберіть групу:</value>
+  </data>
+  <data name="NoGroups" xml:space="preserve">
+    <value>Немає груп</value>
+  </data>
+  <data name="ThisGroupHasNoEnemies" xml:space="preserve">
+    <value>У цієї групи немає ворогів</value>
+  </data>
 </root>
