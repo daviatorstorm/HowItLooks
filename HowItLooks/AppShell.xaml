@@ -9,10 +9,8 @@
     xmlns:strings="clr-namespace:HowItLooks.Resources.Languages"
     Title="How it looks">
 
-    <ShellContent Route="Campaigns" ContentTemplate="{DataTemplate local:Campaigns}" />
-    <!--<ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />-->
-    <ShellContent Route="Globals" ContentTemplate="{DataTemplate local:Globals}" />
-    <ShellContent Route="Groups" ContentTemplate="{DataTemplate local:Groups}" />
+    <ShellContent Route="Campaigns" ContentTemplate="{DataTemplate local:Campaigns}" Shell.FlyoutItemIsVisible="False"/>
+    <ShellContent Route="Groups" ContentTemplate="{DataTemplate local:Groups}" Shell.FlyoutItemIsVisible="False"/>
     <!--<ShellContent Route="Groups/details" ContentTemplate="{DataTemplate local:GroupDetailsPage}" />-->
     <!--<ShellContent Route="Groups" ContentTemplate="{DataTemplate local:Groups}" >
         <ShellContent Route="details" ContentTemplate="{DataTemplate local:GroupDetailsPage}" />
@@ -34,22 +32,6 @@
                        Source="campaign.png"
                        Style="{StaticResource FlyoutMenuIconStyle}"/>
                 <Label Text="{extension:Translate Key=Battle}"
-                       Grid.Column="1"
-                       Style="{StaticResource FlyoutMenuLabelStyle}" />
-            </Grid>
-
-            <Grid Padding="10">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnGlobalsTapped" />
-                </Grid.GestureRecognizers>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image x:Name="GlobalsIcon"
-                       Source="earth.png"
-                       Style="{StaticResource FlyoutMenuIconStyle}"/>
-                <Label Text="{extension:Translate Key=Global}"
                        Grid.Column="1"
                        Style="{StaticResource FlyoutMenuLabelStyle}" />
             </Grid>
