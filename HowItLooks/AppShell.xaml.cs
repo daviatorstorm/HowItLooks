@@ -48,9 +48,6 @@ namespace HowItLooks
 
             if (MainIcon != null)
                 MainIcon.Source = isDark ? "campaign_light.png" : "campaign.png";
-
-            if (GlobalsIcon != null)
-                GlobalsIcon.Source = isDark ? "earth_light.png" : "earth.png";
         }
 
         private async void OnMainTapped(object sender, EventArgs e)
@@ -59,11 +56,6 @@ namespace HowItLooks
             Shell.Current.FlyoutIsPresented = false;
         }
 
-        private async void OnGlobalsTapped(object sender, EventArgs e)
-        {
-            await GoToAsync("//Globals");
-            Shell.Current.FlyoutIsPresented = false;
-        }
         private async void OnGroupsTapped(object sender, EventArgs e)
         {
             await GoToAsync("//Groups");
